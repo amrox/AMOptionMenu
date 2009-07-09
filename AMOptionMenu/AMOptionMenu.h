@@ -22,44 +22,7 @@
 
 + (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title;
 
-//+ (AMOptionMenuItem*) optionItemWithIdentifer:(NSString*)identifier sectionIdentifier:(NSString*)
-
-
-//+ (AMOptionMenuItem*) optionMenuSectionWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle;
-
 @end
-
-//@interface AMOptionMenuItem : NSObject
-//{
-//	NSString* _sectionIdentifier;
-//	
-//}
-//
-//
-//@end
-
-
-
-//@interface AMOptionMenu : NSMenu
-//{
-//
-//}
-//
-//@end
-
-
-
-//@protocol AMOptionMenuDelegate
-//
-//
-//#pragma mark DataSource-like methods
-//@required
-////- (NSInteger) numberOfSectionsInOptionMenu:(AMOptionMenu*)optionMenu;
-//- (NSArray*) sectionIndentifiersForOptionMenu:(AMOptionMenu*)optionMenu;
-//
-//
-//@end
-
 
 
 @interface AMOptionMenuDataSource : NSObject
@@ -70,7 +33,6 @@
 }
 
 @property (nonatomic, readonly) NSString* summaryString;
-
 
 - (NSArray*) sections;
 - (void) setSections:(NSArray*)sections;
