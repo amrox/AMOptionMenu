@@ -42,9 +42,6 @@
 
 @end
 
-
-
-
 #pragma mark -
 
 @interface AMOptionMenuDataSource ()
@@ -128,7 +125,6 @@
 - (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inSection:(AMOptionMenuItem*)section
 {
 	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:@selector(optionChosen:) keyEquivalent:@""];
-	//NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:nil keyEquivalent:@""];
 
 	[menuItem setIndentationLevel:1];
 	[menuItem setTarget:self];
@@ -145,9 +141,6 @@
 		  toObject:self
 	   withKeyPath:keypath
 		   options:bindingOptions];
-	
-
-	[self addObserver:self forKeyPath:keypath options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
 
 	return [menuItem autorelease];
 }
@@ -166,7 +159,7 @@
 {
 	if( [_sectionsDict objectForKey:key] )
 	{
-		NSLog( @"settingValue:%@ forKey:%@", value, key );
+		//NSLog( @"settingValue:%@ forKey:%@", value, key );
 		[self willChangeValueForKey:@"summaryString"];
 		[_stateDict setObject:value forKey:key];
 		[self didChangeValueForKey:@"summaryString"];
@@ -189,12 +182,12 @@
 		{
 			if( [[_stateDict objectForKey:sectionKey] isEqual:optionKey] )
 			{
-				NSLog( @"valueForKeyPath:%@ is YES", keyPath );
+				//NSLog( @"valueForKeyPath:%@ is YES", keyPath );
 				return [NSNumber numberWithBool:YES];
 			}
 			else
 			{
-				NSLog( @"valueForKeyPath:%@ is NO", keyPath );
+				//NSLog( @"valueForKeyPath:%@ is NO", keyPath );
 				return [NSNumber numberWithBool:NO];				
 			}
 		}
@@ -226,22 +219,17 @@
 
 - (void) optionChosen:(id)sender
 {
-	NSMenuItem* menuItem = (NSMenuItem*)sender;
-	NSString* keyPath = [menuItem representedObject];
+	NSString* keyPath = [sender representedObject];
 	[self performSelector:@selector(chooseOptionWithKeyPath:) withObject:keyPath afterDelay:0.0];
-		
+	
+	// NOTE: using performSelector:afterDelay was necessary for the PopupButton UI to update
+	// correctly.  I don't fully understand why.
 }
 
 
 - (void) chooseOptionWithKeyPath:(NSString*)keyPath
 {
 	[self setValue:[NSNumber numberWithBool:YES] forKeyPath:keyPath];	
-}
-
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	NSLog( @"got change for keyPath:%@ new:%@", keyPath, [change objectForKey:NSKeyValueChangeNewKey] );
 }
 
 
