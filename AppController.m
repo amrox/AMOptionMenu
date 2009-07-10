@@ -16,6 +16,7 @@
 
 
 
+//-(void)applicationDidFinishLaunching:(NSNotification*)aNotification
 - (void) awakeFromNib
 {
 	
@@ -45,22 +46,7 @@
 	
 	[[popUpButton cell] setDataSource:ds];
 	
-//	NSMenuItem *summaryItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
-//	[summaryItem bind:@"title" toObject:ds withKeyPath:@"summaryString" options:nil];
-//	[newMenu1 insertItem:summaryItem atIndex:0];
-//	[summaryItem release];
-//
-//	[popUpButton setMenu:newMenu1];
-//	[popUpButton setAutoenablesItems:NO];
-//	[popUpButton setPullsDown:YES];
-//	[popUpButton setAlignment:NSCenterTextAlignment];
-//	
-//	[[popUpButton cell] setArrowPosition:NSPopUpArrowAtBottom];
-//	
-//	[[popUpButton cell] setAltersStateOfSelectedItem:YES];
-		
-//	[[popUpButton cell] setControlSize:NSSmallControlSize];
-//	[[popUpButton cell] setFont:[NSFont labelFontOfSize:kScanOptionsLabelSize]];
+
 	
 	
 	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];

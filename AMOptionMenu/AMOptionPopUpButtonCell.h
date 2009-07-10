@@ -13,6 +13,7 @@
 @interface AMOptionPopUpButtonCell : NSPopUpButtonCell
 {
 	AMOptionMenuDataSource* _dataSource;
+	//NSMenuItem* _titleItem;
 }
 
 
