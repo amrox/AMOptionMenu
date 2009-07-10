@@ -8,7 +8,7 @@
 
 #import "AppController.h"
 
-#import "AMOptionMenu.h"
+#import "AMOptionMenuDataSource.h"
 
 #import "AMOptionPopUpButton.h"
 
@@ -37,7 +37,7 @@
 	
 	NSArray* dinosaurOptions = [NSArray arrayWithObjects:
 								[AMOptionMenuItem itemWithIdentifier:@"Awesome" title:@"Awesome"],
-								[AMOptionMenuItem itemWithIdentifier:@"ReallyAwesome" title:@"Really Awesome"],
+								[AMOptionMenuItem itemWithIdentifier:@"ReallyAwesome" title:@"Really Awesome" shortTitle:@"R. Awe."],
 								nil];
 	[ds setOptions:dinosaurOptions forSectionWithIdentifier:@"Dinosaurs"];
 	
@@ -45,10 +45,7 @@
 	
 	
 	[[popUpButton cell] setDataSource:ds];
-	
-
-	
-	
+		
 	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
 	
 

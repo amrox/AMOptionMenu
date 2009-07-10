@@ -6,7 +6,7 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "AMOptionMenu.h"
+#import "AMOptionMenuDataSource.h"
 
 
 NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
@@ -19,7 +19,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 @synthesize shortTitle = _shortTitle;
 
 
-+ (AMOptionMenuItem*) optionMenuSectionWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle
 {
 	AMOptionMenuItem* optionMenuSection = [[[AMOptionMenuItem alloc] init] autorelease];
 	[optionMenuSection setIdentifier:identifier];
@@ -31,7 +31,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 + (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title
 {
-	return [self optionMenuSectionWithIdentifier:identifier title:title shortTitle:nil];
+	return [self itemWithIdentifier:identifier title:title shortTitle:nil];
 }
 
 
@@ -42,6 +42,15 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 	[_shortTitle release];
 	[super dealloc];
 }
+
+
+- (NSString*) titleForSummary
+{
+	if( [self shortTitle] )
+		return [self shortTitle];
+	return [self title];
+}
+
 
 @end
 
@@ -101,18 +110,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 {
 	NSMenu* menu = [[NSMenu alloc] initWithTitle:title];
 	[menu setAutoenablesItems:NO];
-	[menu setDelegate:self];
-	
-//	for( AMOptionMenuItem* section in [self sections] )
-//	{
-//		[menu addItem:[self menuItemForSection:section]];
-//		
-//		for( AMOptionMenuItem* option in [self optionsForSectionWithIdentifier:[section identifier]] )
-//		{
-//			[menu addItem:[self menuItemForOption:option inSection:section]];
-//		}
-//	}
-	
+	[menu setDelegate:self];	
 	return [menu autorelease];
 }
 
@@ -127,7 +125,6 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 - (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inSection:(AMOptionMenuItem*)section
 {
-	//NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:@selector(optionChosen:) keyEquivalent:@""];
 	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:nil keyEquivalent:@""];
 
 	[menuItem setIndentationLevel:1];
@@ -229,9 +226,19 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 		if( [string length] )
 			[string appendString:@" | "];
 		
-		// TODO: make nicer		
-		NSString* optionId = [self valueForKey:sectionId];		
-		[string appendFormat:@"%@", optionId];
+		// TODO: make nicer
+		NSString* optionId = [self valueForKey:sectionId];
+		
+		NSString* title = nil;
+		for( AMOptionMenuItem* menuItem in [_optionsDict objectForKey:sectionId] )
+		{
+			if( [[menuItem identifier] isEqualToString:optionId] )
+			{
+				title = [menuItem titleForSummary];
+				break;
+			}
+		}		
+		[string appendFormat:@"%@", title];
 	}
 	return [NSString stringWithString:string];
 }

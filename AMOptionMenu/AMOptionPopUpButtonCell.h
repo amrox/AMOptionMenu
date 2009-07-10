@@ -3,7 +3,7 @@
 //  AMOptionMenuDemo
 //
 //  Created by Andy Mroczkowski  on 7/10/09.
-//  Copyright 2009 The Neat Company. All rights reserved.
+//  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

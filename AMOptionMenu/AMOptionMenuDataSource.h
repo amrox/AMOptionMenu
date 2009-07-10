@@ -21,9 +21,10 @@ extern NSString* const kAMOptionPopUpButtonTitle;
 @property (nonatomic, retain) NSString* identifier;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* shortTitle;
+@property (nonatomic, readonly) NSString* titleForSummary;
 
 + (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title;
-
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle;
 @end
 
 
