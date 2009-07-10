@@ -13,7 +13,8 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		B3DADB5B100589E700789685 /* AMOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADB5A100589E700789685 /* AMOptionMenu.m */; };
 		B3DADC3410058E5E00789685 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADC3310058E5E00789685 /* AppController.m */; };
-		B3DADDE91005CE2800789685 /* NSPopUpButton+AMOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADDE81005CE2800789685 /* NSPopUpButton+AMOptionMenu.m */; };
+		B3DAE0981006823F00789685 /* AMOptionPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DAE0971006823F00789685 /* AMOptionPopUpButton.m */; };
+		E12A723C10077C000049FD9E /* AMOptionPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E12A723B10077C000049FD9E /* AMOptionPopUpButtonCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +32,10 @@
 		B3DADB5A100589E700789685 /* AMOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOptionMenu.m; sourceTree = "<group>"; };
 		B3DADC3210058E5E00789685 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		B3DADC3310058E5E00789685 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
-		B3DADDE71005CE2800789685 /* NSPopUpButton+AMOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPopUpButton+AMOptionMenu.h"; sourceTree = "<group>"; };
-		B3DADDE81005CE2800789685 /* NSPopUpButton+AMOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPopUpButton+AMOptionMenu.m"; sourceTree = "<group>"; };
+		B3DAE0961006823F00789685 /* AMOptionPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionPopUpButton.h; sourceTree = "<group>"; };
+		B3DAE0971006823F00789685 /* AMOptionPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOptionPopUpButton.m; sourceTree = "<group>"; };
+		E12A723A10077C000049FD9E /* AMOptionPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionPopUpButtonCell.h; sourceTree = "<group>"; };
+		E12A723B10077C000049FD9E /* AMOptionPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOptionPopUpButtonCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +131,10 @@
 			children = (
 				B3DADB59100589E700789685 /* AMOptionMenu.h */,
 				B3DADB5A100589E700789685 /* AMOptionMenu.m */,
-				B3DADDE71005CE2800789685 /* NSPopUpButton+AMOptionMenu.h */,
-				B3DADDE81005CE2800789685 /* NSPopUpButton+AMOptionMenu.m */,
+				B3DAE0961006823F00789685 /* AMOptionPopUpButton.h */,
+				B3DAE0971006823F00789685 /* AMOptionPopUpButton.m */,
+				E12A723A10077C000049FD9E /* AMOptionPopUpButtonCell.h */,
+				E12A723B10077C000049FD9E /* AMOptionPopUpButtonCell.m */,
 			);
 			path = AMOptionMenu;
 			sourceTree = "<group>";
@@ -192,7 +197,8 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				B3DADB5B100589E700789685 /* AMOptionMenu.m in Sources */,
 				B3DADC3410058E5E00789685 /* AppController.m in Sources */,
-				B3DADDE91005CE2800789685 /* NSPopUpButton+AMOptionMenu.m in Sources */,
+				B3DAE0981006823F00789685 /* AMOptionPopUpButton.m in Sources */,
+				E12A723C10077C000049FD9E /* AMOptionPopUpButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

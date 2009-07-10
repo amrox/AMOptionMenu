@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @class AMOptionMenuDataSource;
+@class AMOptionPopUpButton;
 
 @interface AppController : NSObject {
 
 	IBOutlet NSPopUpButton* popUpButton;
 	
 	IBOutlet NSMenuItem* testMenu;
+	
+	IBOutlet NSWindow* window;
 	
 	AMOptionMenuDataSource* ds;
 

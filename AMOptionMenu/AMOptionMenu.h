@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
+extern NSString* const kAMOptionPopUpButtonTitle;
+
 @interface AMOptionMenuItem : NSObject
 {
 	NSString* _identifier;
@@ -41,7 +43,7 @@
 - (void) setOptions:(NSArray*)options forSectionWithIdentifier:(NSString*)identifier;
 
 
-- (NSMenu*) newMenu;
+- (NSMenu*) createMenuWithTitle:(NSString*)title;
 
 @end
 

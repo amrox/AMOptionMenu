@@ -10,6 +10,8 @@
 
 #import "AMOptionMenu.h"
 
+#import "AMOptionPopUpButton.h"
+
 @implementation AppController
 
 
@@ -38,25 +40,38 @@
 								nil];
 	[ds setOptions:dinosaurOptions forSectionWithIdentifier:@"Dinosaurs"];
 	
-	NSMenu* newMenu1 = [ds newMenu];
+//	NSMenu* newMenu1 = [ds createMenuWithTitle:@"Stuff"];
 	
 	
-	NSMenuItem *summaryItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
-	[summaryItem bind:@"title" toObject:ds withKeyPath:@"summaryString" options:nil];
-	[newMenu1 insertItem:summaryItem atIndex:0];
-	[summaryItem release];
-
-	[popUpButton setMenu:newMenu1];
-	[popUpButton setAutoenablesItems:NO];
-	[popUpButton setPullsDown:YES];
-	[popUpButton setAlignment:NSCenterTextAlignment];
+	[[popUpButton cell] setDataSource:ds];
 	
-	[[popUpButton cell] setArrowPosition:NSPopUpArrowAtBottom];
+//	NSMenuItem *summaryItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+//	[summaryItem bind:@"title" toObject:ds withKeyPath:@"summaryString" options:nil];
+//	[newMenu1 insertItem:summaryItem atIndex:0];
+//	[summaryItem release];
+//
+//	[popUpButton setMenu:newMenu1];
+//	[popUpButton setAutoenablesItems:NO];
+//	[popUpButton setPullsDown:YES];
+//	[popUpButton setAlignment:NSCenterTextAlignment];
+//	
+//	[[popUpButton cell] setArrowPosition:NSPopUpArrowAtBottom];
+//	
+//	[[popUpButton cell] setAltersStateOfSelectedItem:YES];
+		
 //	[[popUpButton cell] setControlSize:NSSmallControlSize];
 //	[[popUpButton cell] setFont:[NSFont labelFontOfSize:kScanOptionsLabelSize]];
 	
 	
-	[testMenu setSubmenu:[ds newMenu]];
+	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
+	
+
+	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
+	
+	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
+	[myPopupButton setDataSource:ds];
+	
+	[[window contentView] addSubview:myPopupButton];
 }
 
 
