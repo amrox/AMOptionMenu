@@ -28,6 +28,10 @@ extern NSString* const kAMOptionPopUpButtonTitle;
 @end
 
 
+extern NSString* const kAMOptionMenuDataWillChange;
+extern NSString* const kAMOptionMenuDataDidChange;
+
+
 @interface AMOptionMenuDataSource : NSObject
 {	
 	NSArray* _groups;

@@ -56,6 +56,10 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 #pragma mark -
 
+NSString* const kAMOptionMenuDataWillChange = @"kAMOptionMenuDataWillChange";
+NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
+
+
 @interface AMOptionMenuDataSource ()
 
 @property (nonatomic, retain) NSArray* groups;
@@ -298,7 +302,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values
 {
-	// TODO: post will change notification
+	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataWillChange object:self];
 	
 	[self setGroups:groups];
 	[self setValuesDict:values];
@@ -312,8 +316,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 		}
 	}
 	
-	
-	// TODO: post did change notification
+	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataDidChange object:self];
 }
 
 
