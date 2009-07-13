@@ -10,7 +10,7 @@
 
 
 NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
-
+s
 
 @implementation AMOptionMenuItem
 
@@ -102,27 +102,10 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 }
 
 
-//- (void) setSections:(NSArray*)sections
-//{
-//	for( AMOptionMenuItem* item in sections )
-//	{
-//		[_groups setObject:item forKey:[item identifier]];
-//	}
-//}
-
-
 - (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier
 {
 	return [_valuesDict objectForKey:identifier];
 }
-
-
-//- (void) setOptionValues:(NSArray*)options forGroupWithIdentifier:(NSString*)identifier
-//{
-//	[_valuesDict setObject:options forKey:identifier];
-//	if( ![_stateDict objectForKey:identifier] && [options count] )
-//		[_stateDict setObject:[[options objectAtIndex:0] identifier] forKey:identifier];
-//}
 
 
 - (NSMenu*) createMenuWithTitle:(NSString*)title
@@ -275,30 +258,6 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 
 #pragma mark NSMenu Delegate Methods
-
-
-//- (void)menuNeedsUpdate:(NSMenu *)menu
-//{
-//	while( [[menu itemArray] count] )
-//	{
-//		[menu removeItemAtIndex:0];
-//	}
-//	
-//	if( [[menu title] isEqualToString:kAMOptionPopUpButtonTitle] )
-//	{
-//		[menu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
-//	}
-//		
-//	for( AMOptionMenuItem* section in [self sections] )
-//	{
-//		[menu addItem:[self menuItemForSection:section]];
-//		
-//		for( AMOptionMenuItem* option in [self optionsForSectionWithIdentifier:[section identifier]] )
-//		{
-//			[menu addItem:[self menuItemForOption:option inSection:section]];
-//		}
-//	}
-//}
 
 - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values
 {
