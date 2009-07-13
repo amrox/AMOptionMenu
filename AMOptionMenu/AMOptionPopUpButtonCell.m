@@ -10,6 +10,12 @@
 
 #import "AMOptionMenuDataSource.h"
 
+
+@interface AMOptionPopUpButtonCell ()
+- (void) updateMenu;
+@end
+
+
 @implementation AMOptionPopUpButtonCell
 
 @synthesize dataSource = _dataSource;
@@ -24,9 +30,9 @@
 	[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
 	
-	[[self menu] setTitle:kAMOptionPopUpButtonTitle];  // TODO: a little hacky...
+	//[[self menu] setTitle:kAMOptionPopUpButtonTitle];  // TODO: a little hacky...
 	
-	[self removeAllItems];
+	//[self removeAllItems];
 	
 	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"(No Data Source)" action:nil keyEquivalent:@""];
 	[self setMenuItem:titleItem];
@@ -88,7 +94,8 @@
 	[_dataSource release];
 	_dataSource = dataSource;
 	
-	[[self menu] setDelegate:_dataSource];
+	//[[self menu] setDelegate:_dataSource];
+	[self updateMenu];
 	
 }
 
@@ -96,6 +103,14 @@
 - (void)synchronizeTitleAndSelectedItem
 {
 	// TODO: NOTE: why this is needed
+}
+
+
+- (void) updateMenu
+{
+	NSMenu* newMenu = [[self dataSource] createMenuWithTitle:@""];
+	[newMenu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
+	[self setMenu:newMenu];
 }
 
 

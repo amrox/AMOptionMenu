@@ -16,8 +16,8 @@
 
 
 
-//-(void)applicationDidFinishLaunching:(NSNotification*)aNotification
-- (void) awakeFromNib
+-(void)applicationDidFinishLaunching:(NSNotification*)aNotification
+//- (void) awakeFromNib  // TODO: fix awake from nib timinig
 {
 	
 	ds = [[AMOptionMenuDataSource alloc] init];
@@ -26,23 +26,28 @@
 						 [AMOptionMenuItem itemWithIdentifier:@"Color" title:@"Color"],
 						 [AMOptionMenuItem itemWithIdentifier:@"Dinosaurs" title:@"Dinosaurs"],
 						 nil];
-	[ds setSections:sections];
 	
+	
+	NSMutableDictionary* valuesDict = [NSMutableDictionary dictionary];
 	NSArray* colorOptions = [NSArray arrayWithObjects:
 							 [AMOptionMenuItem itemWithIdentifier:@"Red" title:@"Red"],
 							 [AMOptionMenuItem itemWithIdentifier:@"Green" title:@"Green"],
 							 [AMOptionMenuItem itemWithIdentifier:@"Blue" title:@"Blue"],
 							 nil];
-	[ds setOptions:colorOptions forSectionWithIdentifier:@"Color"];
+	[valuesDict setObject:colorOptions forKey:@"Color"];
+	
 	
 	NSArray* dinosaurOptions = [NSArray arrayWithObjects:
 								[AMOptionMenuItem itemWithIdentifier:@"Awesome" title:@"Awesome"],
 								[AMOptionMenuItem itemWithIdentifier:@"ReallyAwesome" title:@"Really Awesome" shortTitle:@"R. Awe."],
 								nil];
-	[ds setOptions:dinosaurOptions forSectionWithIdentifier:@"Dinosaurs"];
+	[valuesDict setObject:dinosaurOptions forKey:@"Dinosaurs"];
+
+//	[ds setOptions:dinosaurOptions forSectionWithIdentifier:@"Dinosaurs"];
 	
 //	NSMenu* newMenu1 = [ds createMenuWithTitle:@"Stuff"];
 	
+	[ds setOptionGroups:sections andValues:valuesDict];
 	
 	[[popUpButton cell] setDataSource:ds];
 		

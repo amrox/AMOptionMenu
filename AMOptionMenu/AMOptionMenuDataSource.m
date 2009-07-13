@@ -21,11 +21,11 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 + (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle
 {
-	AMOptionMenuItem* optionMenuSection = [[[AMOptionMenuItem alloc] init] autorelease];
-	[optionMenuSection setIdentifier:identifier];
-	[optionMenuSection setTitle:title];
-	[optionMenuSection setShortTitle:shortTitle];
-	return optionMenuSection;
+	AMOptionMenuItem* item = [[[AMOptionMenuItem alloc] init] autorelease];
+	[item setIdentifier:identifier];
+	[item setTitle:title];
+	[item setShortTitle:shortTitle];
+	return item;
 }
 
 
@@ -57,73 +57,99 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 #pragma mark -
 
 @interface AMOptionMenuDataSource ()
-- (NSMenuItem*) menuItemForSection:(AMOptionMenuItem*)section;
-- (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inSection:(AMOptionMenuItem*)section;
+
+@property (nonatomic, retain) NSArray* groups;
+@property (nonatomic, retain) NSDictionary* valuesDict;
+
+- (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier;
+- (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group;
+- (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inGroup:(AMOptionMenuItem*)group;
 @end
 
 @implementation AMOptionMenuDataSource
 
+@synthesize groups = _groups;
+@synthesize valuesDict = _valuesDict;
 
 - (id) init
 {
 	self = [super init];
 	if (self != nil)
 	{
-		_sectionsDict = [[NSMutableDictionary alloc] init];
-		_optionsDict = [[NSMutableDictionary alloc] init];
+		_groups = [[NSMutableDictionary alloc] init];
+		_valuesDict = [[NSMutableDictionary alloc] init];
 		_stateDict = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
 
 
-- (NSArray*) sections
+- (void) dealloc
 {
-	return [_sectionsDict allValues];
+	[_groups release];
+	[_valuesDict release];
+	[super dealloc];
 }
 
 
-- (void) setSections:(NSArray*)sections
+- (NSArray*) optionGroups
 {
-	for( AMOptionMenuItem* item in sections )
-	{
-		[_sectionsDict setObject:item forKey:[item identifier]];
-	}
+	return [NSArray arrayWithArray:_groups];
 }
 
 
-- (NSArray*) optionsForSectionWithIdentifier:(NSString*)identifier
+//- (void) setSections:(NSArray*)sections
+//{
+//	for( AMOptionMenuItem* item in sections )
+//	{
+//		[_groups setObject:item forKey:[item identifier]];
+//	}
+//}
+
+
+- (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier
 {
-	return [_optionsDict objectForKey:identifier];
+	return [_valuesDict objectForKey:identifier];
 }
 
 
-- (void) setOptions:(NSArray*)options forSectionWithIdentifier:(NSString*)identifier
-{
-	[_optionsDict setObject:options forKey:identifier];
-	if( ![_stateDict objectForKey:identifier] && [options count] )
-		[_stateDict setObject:[[options objectAtIndex:0] identifier] forKey:identifier];
-}
+//- (void) setOptionValues:(NSArray*)options forGroupWithIdentifier:(NSString*)identifier
+//{
+//	[_valuesDict setObject:options forKey:identifier];
+//	if( ![_stateDict objectForKey:identifier] && [options count] )
+//		[_stateDict setObject:[[options objectAtIndex:0] identifier] forKey:identifier];
+//}
 
 
 - (NSMenu*) createMenuWithTitle:(NSString*)title
 {
 	NSMenu* menu = [[NSMenu alloc] initWithTitle:title];
 	[menu setAutoenablesItems:NO];
-	[menu setDelegate:self];	
+//	[menu setDelegate:self];	
+
+	for( AMOptionMenuItem* group in [self optionGroups] )
+	{
+		[menu addItem:[self menuItemForGroup:group]];
+		
+		for( AMOptionMenuItem* value in [self optionValuesForGroupWithIdentifier:[group identifier]] )
+		{
+			[menu addItem:[self menuItemForOption:value inGroup:group]];
+		}
+	}
+	
 	return [menu autorelease];
 }
 
 
-- (NSMenuItem*) menuItemForSection:(AMOptionMenuItem*)section
+- (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group
 {
-	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[section title] action:nil keyEquivalent:@""];
+	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[group title] action:nil keyEquivalent:@""];
 	[menuItem setEnabled:NO];
 	return [menuItem autorelease];
 }
 
 
-- (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inSection:(AMOptionMenuItem*)section
+- (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inGroup:(AMOptionMenuItem*)group
 {
 	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:nil keyEquivalent:@""];
 
@@ -131,7 +157,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 	[menuItem setTarget:self];
 	[menuItem setEnabled:YES];
 	
-	NSString* keypath = [NSString stringWithFormat:@"%@.%@", [section identifier], [option identifier]];
+	NSString* keypath = [NSString stringWithFormat:@"%@.%@", [group identifier], [option identifier]];
 	[menuItem setRepresentedObject:keypath];
 
 	NSDictionary* bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -149,7 +175,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 - (id) valueForUndefinedKey:(NSString*)key
 {
-	if( [_sectionsDict objectForKey:key] )
+	if( [_valuesDict objectForKey:key] )
 		return [_stateDict objectForKey:key];
 	
 	return [super valueForUndefinedKey:key];
@@ -158,7 +184,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-	if( [_sectionsDict objectForKey:key] )
+	if( [_valuesDict objectForKey:key] )
 	{
 		//NSLog( @"settingValue:%@ forKey:%@", value, key );
 		[self willChangeValueForKey:@"summaryString"];
@@ -176,12 +202,12 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 	
 	if( [keyPathComponents count] == 2 )
 	{
-		NSString* sectionKey = [keyPathComponents objectAtIndex:0];
+		NSString* groupKey = [keyPathComponents objectAtIndex:0];
 		NSString* optionKey = [keyPathComponents objectAtIndex:1];
 
-		if( [_sectionsDict objectForKey:sectionKey] )
+		if( [_valuesDict objectForKey:groupKey] )
 		{
-			if( [[_stateDict objectForKey:sectionKey] isEqual:optionKey] )
+			if( [[_stateDict objectForKey:groupKey] isEqual:optionKey] )
 			{
 				//NSLog( @"valueForKeyPath:%@ is YES", keyPath );
 				return [NSNumber numberWithBool:YES];
@@ -205,7 +231,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 		NSString* sectionKey = [keyPathComponents objectAtIndex:0];
 		NSString* optionKey = [keyPathComponents objectAtIndex:1];		
 		
-		if( [_sectionsDict objectForKey:sectionKey] )
+		if( [_valuesDict objectForKey:sectionKey] )
 		{
 			if( [value boolValue] )
 			{
@@ -221,16 +247,16 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 - (NSString*) summaryString
 {
 	NSMutableString* string = [NSMutableString string];
-	for( NSString* sectionId in [_sectionsDict allKeys] )
+	for( AMOptionMenuItem* group in _groups )
 	{
 		if( [string length] )
 			[string appendString:@" | "];
 		
 		// TODO: make nicer
-		NSString* optionId = [self valueForKey:sectionId];
+		NSString* optionId = [self valueForKey:[group identifier]];
 		
 		NSString* title = nil;
-		for( AMOptionMenuItem* menuItem in [_optionsDict objectForKey:sectionId] )
+		for( AMOptionMenuItem* menuItem in [_valuesDict objectForKey:[group identifier]] )
 		{
 			if( [[menuItem identifier] isEqualToString:optionId] )
 			{
@@ -247,30 +273,48 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 #pragma mark NSMenu Delegate Methods
 
 
-- (void)menuNeedsUpdate:(NSMenu *)menu
+//- (void)menuNeedsUpdate:(NSMenu *)menu
+//{
+//	while( [[menu itemArray] count] )
+//	{
+//		[menu removeItemAtIndex:0];
+//	}
+//	
+//	if( [[menu title] isEqualToString:kAMOptionPopUpButtonTitle] )
+//	{
+//		[menu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
+//	}
+//		
+//	for( AMOptionMenuItem* section in [self sections] )
+//	{
+//		[menu addItem:[self menuItemForSection:section]];
+//		
+//		for( AMOptionMenuItem* option in [self optionsForSectionWithIdentifier:[section identifier]] )
+//		{
+//			[menu addItem:[self menuItemForOption:option inSection:section]];
+//		}
+//	}
+//}
+
+- (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values
 {
-	while( [[menu itemArray] count] )
-	{
-		[menu removeItemAtIndex:0];
-	}
+	// TODO: post will change notification
 	
-	if( [[menu title] isEqualToString:kAMOptionPopUpButtonTitle] )
+	[self setGroups:groups];
+	[self setValuesDict:values];
+	
+	for( NSString* groupId in [[self valuesDict] allKeys] )
 	{
-		[menu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
-	}
-		
-	for( AMOptionMenuItem* section in [self sections] )
-	{
-		[menu addItem:[self menuItemForSection:section]];
-		
-		for( AMOptionMenuItem* option in [self optionsForSectionWithIdentifier:[section identifier]] )
+		if( ![_stateDict objectForKey:groupId] )
 		{
-			[menu addItem:[self menuItemForOption:option inSection:section]];
+			NSString* valueId = [[[[self valuesDict] objectForKey:groupId] objectAtIndex:0] identifier];
+			[_stateDict setObject:valueId forKey:groupId];
 		}
 	}
+	
+	
+	// TODO: post did change notification
 }
-
-
 
 
 // THOUGHT: bind to Dinosaurs.Awesome.isSelected ????

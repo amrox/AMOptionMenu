@@ -30,19 +30,19 @@ extern NSString* const kAMOptionPopUpButtonTitle;
 
 @interface AMOptionMenuDataSource : NSObject
 {	
-	NSMutableDictionary* _sectionsDict;
-	NSMutableDictionary* _optionsDict;
+	NSArray* _groups;
+	NSDictionary* _valuesDict;
 	NSMutableDictionary* _stateDict;
 }
 
 @property (nonatomic, readonly) NSString* summaryString;
 
-- (NSArray*) sections;
-- (void) setSections:(NSArray*)sections;
+//- (NSArray*) optionGroups;
+//- (void) setSections:(NSArray*)sections;
 
-- (NSArray*) optionsForSectionWithIdentifier:(NSString*)identifier;
-- (void) setOptions:(NSArray*)options forSectionWithIdentifier:(NSString*)identifier;
+//- (void) setOptions:(NSArray*)options forSectionWithIdentifier:(NSString*)identifier;
 
+- (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values;
 
 - (NSMenu*) createMenuWithTitle:(NSString*)title;
 
