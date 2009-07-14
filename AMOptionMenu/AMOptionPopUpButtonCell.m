@@ -27,7 +27,7 @@
 	[self setAutoenablesItems:NO];
 	[self setAlignment:NSCenterTextAlignment];
 	[self setArrowPosition:NSPopUpArrowAtBottom];
-	[self setAltersStateOfSelectedItem:NO];
+	//[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
 	
 	//[[self menu] setTitle:kAMOptionPopUpButtonTitle];  // TODO: a little hacky...
@@ -70,6 +70,7 @@
 
 - (void) dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[_dataSource release];
 	[super dealloc];
 }
@@ -90,13 +91,26 @@
 
 - (void) setDataSource:(AMOptionMenuDataSource*)dataSource
 {
+	if( dataSource == _dataSource )
+		return;
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuDataDidChange object:_dataSource];
+	
 	[dataSource retain];
 	[_dataSource release];
 	_dataSource = dataSource;
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuDataDidChange object:_dataSource];
 	
 	//[[self menu] setDelegate:_dataSource];
 	[self updateMenu];
 	
+}
+
+
+- (void) optionsChanged:(NSNotification*) note
+{
+	[self updateMenu];
 }
 
 

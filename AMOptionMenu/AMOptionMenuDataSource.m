@@ -10,7 +10,7 @@
 
 
 NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
-s
+
 
 @implementation AMOptionMenuItem
 
@@ -108,22 +108,31 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 }
 
 
+- (NSArray*) createMenuItems
+{
+	NSMutableArray* array = [NSMutableArray array];
+	for( AMOptionMenuItem* group in [self optionGroups] )
+	{
+		[array addObject:[self menuItemForGroup:group]];
+		
+		for( AMOptionMenuItem* value in [self optionValuesForGroupWithIdentifier:[group identifier]] )
+		{
+			[array addObject:[self menuItemForOption:value inGroup:group]];
+		}
+	}
+	return array;
+}
+
 - (NSMenu*) createMenuWithTitle:(NSString*)title
 {
 	NSMenu* menu = [[NSMenu alloc] initWithTitle:title];
 	[menu setAutoenablesItems:NO];
-//	[menu setDelegate:self];	
 
-	for( AMOptionMenuItem* group in [self optionGroups] )
+	for( NSMenuItem* item in [self createMenuItems] )
 	{
-		[menu addItem:[self menuItemForGroup:group]];
-		
-		for( AMOptionMenuItem* value in [self optionValuesForGroupWithIdentifier:[group identifier]] )
-		{
-			[menu addItem:[self menuItemForOption:value inGroup:group]];
-		}
+		[menu addItem:item];
 	}
-	
+
 	return [menu autorelease];
 }
 
@@ -138,7 +147,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 - (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inGroup:(AMOptionMenuItem*)group
 {
-	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:nil keyEquivalent:@""];
+	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[option title] action:@selector(optionChosen:) keyEquivalent:@""];
 
 	[menuItem setIndentationLevel:1];
 	[menuItem setTarget:self];
@@ -160,6 +169,18 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 }
 
 
+- (void) optionChosen:(id)sender
+{
+	[self performSelector:@selector(choseOptionWithKeyPath:) withObject:[sender representedObject] afterDelay:0.0];
+}
+
+
+- (void) choseOptionWithKeyPath:(NSString*)keypath
+{
+	[self setValue:[NSNumber numberWithBool:YES] forKeyPath:keypath];	
+}
+
+
 - (id) valueForUndefinedKey:(NSString*)key
 {
 	if( [_valuesDict objectForKey:key] )
@@ -173,7 +194,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 {
 	if( [_valuesDict objectForKey:key] )
 	{
-		//NSLog( @"settingValue:%@ forKey:%@", value, key );
+		NSLog( @"settingValue:%@ forKey:%@", value, key );
 		[self willChangeValueForKey:@"summaryString"];
 		[_stateDict setObject:value forKey:key];
 		[self didChangeValueForKey:@"summaryString"];
@@ -196,12 +217,12 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 		{
 			if( [[_stateDict objectForKey:groupKey] isEqual:optionKey] )
 			{
-				//NSLog( @"valueForKeyPath:%@ is YES", keyPath );
+				NSLog( @"valueForKeyPath:%@ is YES", keyPath );
 				return [NSNumber numberWithBool:YES];
 			}
 			else
 			{
-				//NSLog( @"valueForKeyPath:%@ is NO", keyPath );
+				NSLog( @"valueForKeyPath:%@ is NO", keyPath );
 				return [NSNumber numberWithBool:NO];				
 			}
 		}
@@ -278,6 +299,11 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataDidChange object:self];
 }
 
+
+- (NSDictionary*) state
+{
+	return [[_stateDict copy] autorelease];
+}
 
 // THOUGHT: bind to Dinosaurs.Awesome.isSelected ????
 

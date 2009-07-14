@@ -50,5 +50,9 @@ extern NSString* const kAMOptionMenuDataDidChange;
 
 - (NSMenu*) createMenuWithTitle:(NSString*)title;
 
+- (NSArray*) createMenuItems;
+
+- (NSDictionary*) state;
+
 @end
 
