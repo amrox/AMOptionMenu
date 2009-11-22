@@ -28,7 +28,7 @@
 
 - (void) setDataSource:(AMOptionMenuDataSource*) dataSource
 {
-	[[self cell] setDataSource:dataSource];
+	[[self cell] setOptionMenuDataSource:dataSource];
 }
 
 @end

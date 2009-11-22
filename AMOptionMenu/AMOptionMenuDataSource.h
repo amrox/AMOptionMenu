@@ -34,8 +34,8 @@ extern NSString* const kAMOptionMenuDataDidChange;
 
 @interface AMOptionMenuDataSource : NSObject
 {	
-	NSArray* _groups;
-	NSDictionary* _valuesDict;
+	NSMutableArray* _groups;
+	NSMutableDictionary* _valuesDict;
 	NSMutableDictionary* _stateDict;
 }
 

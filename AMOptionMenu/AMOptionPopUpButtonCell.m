@@ -18,7 +18,7 @@
 
 @implementation AMOptionPopUpButtonCell
 
-@synthesize dataSource = _dataSource;
+@synthesize optionMenuDataSource = _optionMenuDataSource;
 
 
 - (void) configure
@@ -29,11 +29,7 @@
 	[self setArrowPosition:NSPopUpArrowAtBottom];
 	[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
-	
-	//[[self menu] setTitle:kAMOptionPopUpButtonTitle];  // TODO: a little hacky...
-	
-	//[self removeAllItems];
-	
+		
 	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"(No Data Source)" action:nil keyEquivalent:@""];
 	[self setMenuItem:titleItem];
 	[titleItem release];
@@ -41,7 +37,7 @@
 	NSDictionary* titleBindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 										 @"(no data)", NSNullPlaceholderBindingOption,
 										 nil];
-	[self bind:@"title" toObject:self withKeyPath:@"dataSource.summaryString" options:titleBindingOptions];
+	[self bind:@"title" toObject:self withKeyPath:@"optionMenuDataSource.summaryString" options:titleBindingOptions];
 }
 
 
@@ -71,7 +67,7 @@
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_dataSource release];
+	[_optionMenuDataSource release];
 	[super dealloc];
 }
 
@@ -84,25 +80,24 @@
 
 - (void)setPullsDown:(BOOL)flag
 {
-//	NSAssert( flag, @"must put pull down to operate correctly" );
-//	[super setPullsDown:flag];
+	NSAssert( flag, @"must put pull down to operate correctly" );
+	[super setPullsDown:flag];
 }
 
 
-- (void) setDataSource:(AMOptionMenuDataSource*)dataSource
+- (void) setOptionMenuDataSource:(AMOptionMenuDataSource*)dataSource
 {
-	if( dataSource == _dataSource )
+	if( dataSource == _optionMenuDataSource )
 		return;
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuDataDidChange object:_dataSource];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuDataDidChange object:_optionMenuDataSource];
 	
 	[dataSource retain];
-	[_dataSource release];
-	_dataSource = dataSource;
+	[_optionMenuDataSource release];
+	_optionMenuDataSource = dataSource;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuDataDidChange object:_dataSource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuDataDidChange object:_optionMenuDataSource];
 	
-	//[[self menu] setDelegate:_dataSource];
 	[self updateMenu];
 	
 }
@@ -114,15 +109,9 @@
 }
 
 
-- (void)synchronizeTitleAndSelectedItem
-{
-	// TODO: NOTE: why this is needed
-}
-
-
 - (void) updateMenu
 {
-	NSMenu* newMenu = [[self dataSource] createMenuWithTitle:@""];
+	NSMenu* newMenu = [[self optionMenuDataSource] createMenuWithTitle:@""];
 	[newMenu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
 	[self setMenu:newMenu];
 }

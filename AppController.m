@@ -11,6 +11,7 @@
 #import "AMOptionMenuDataSource.h"
 
 #import "AMOptionPopUpButton.h"
+#import "AMOptionPopUpButtonCell.h"
 
 @implementation AppController
 
@@ -45,13 +46,13 @@
 	
 	[ds setOptionGroups:sections andValues:valuesDict];
 	
-	[[popUpButton cell] setDataSource:ds];
+	[[popUpButton cell] setOptionMenuDataSource:ds];
 		
 	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
 	
 
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
-	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
+	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame pullsDown:YES];
 	[myPopupButton setDataSource:ds];
 	[[window contentView] addSubview:myPopupButton];
 }

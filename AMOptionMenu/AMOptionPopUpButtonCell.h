@@ -12,12 +12,11 @@
 
 @interface AMOptionPopUpButtonCell : NSPopUpButtonCell
 {
-	AMOptionMenuDataSource* _dataSource;
-	//NSMenuItem* _titleItem;
+	AMOptionMenuDataSource* _optionMenuDataSource;
 }
 
 
-@property (nonatomic, retain) AMOptionMenuDataSource* dataSource;
+@property (nonatomic, retain) AMOptionMenuDataSource* optionMenuDataSource;
 
 
 @end
