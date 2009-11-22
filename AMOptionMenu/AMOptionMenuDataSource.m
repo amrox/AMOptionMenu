@@ -68,6 +68,8 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 - (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier;
 - (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group;
 - (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inGroup:(AMOptionMenuItem*)group;
+- (void) choseOptionWithKeyPath:(NSString*)keypath;
+
 @end
 
 @implementation AMOptionMenuDataSource
@@ -156,14 +158,8 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 	NSString* keypath = [NSString stringWithFormat:@"%@.%@", [group identifier], [option identifier]];
 	[menuItem setRepresentedObject:keypath];
 
-	NSDictionary* bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithBool:YES], NSAllowsEditingMultipleValuesSelectionBindingOption,
-									nil];
-	
-	[menuItem bind:@"value"
-		  toObject:self
-	   withKeyPath:keypath
-		   options:bindingOptions];
+	NSDictionary *bindingOptions = nil;
+	[menuItem bind:@"value" toObject:self withKeyPath:keypath options:bindingOptions];
 
 	return [menuItem autorelease];
 }
@@ -171,20 +167,28 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 - (void) optionChosen:(id)sender
 {
+	// ???: the visual check next to the selected item did not update correctly without deferring to the next run loop
+	//[self choseOptionWithKeyPath:[sender representedObject]];
+
 	[self performSelector:@selector(choseOptionWithKeyPath:) withObject:[sender representedObject] afterDelay:0.0];
 }
 
 
 - (void) choseOptionWithKeyPath:(NSString*)keypath
 {
-	[self setValue:[NSNumber numberWithBool:YES] forKeyPath:keypath];	
+	NSLog( @"--------- choseOptionWithKeyPath: %@ ---------", keypath );
+	[self setValue:[NSNumber numberWithBool:YES] forKeyPath:keypath];
 }
 
 
 - (id) valueForUndefinedKey:(NSString*)key
 {
 	if( [_valuesDict objectForKey:key] )
-		return [_stateDict objectForKey:key];
+	{
+		id val = [_stateDict objectForKey:key];
+		NSLog( @"valueForUndefinedKey: %@ = %@", key, val );
+		return val;
+	}
 	
 	return [super valueForUndefinedKey:key];
 }
@@ -233,6 +237,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 - (void)setValue:(id)value forKeyPath:(NSString*)keyPath
 {
+	NSLog( @"settin value:%@ forKeyPath:%@", value, keyPath );
 	NSArray* keyPathComponents = [keyPath componentsSeparatedByString:@"."];
 	if( [keyPathComponents count] == 2 )
 	{
@@ -306,6 +311,13 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 }
 
 // THOUGHT: bind to Dinosaurs.Awesome.isSelected ????
+
+// THOUGHT: 
+// valueForKeyPath:Dinosaurs.Awesome is NO
+// valueForKeyPath:Dinosaurs.ReallyAwesome is YES
+// CHANGE TO:??
+// valueForKeyPath:Dinosaurs.isAwesome is NO
+// valueForKeyPath:Dinosaurs.isReallyAwesome is YES
 
 @end
 

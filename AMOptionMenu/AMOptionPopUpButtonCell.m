@@ -27,7 +27,7 @@
 	[self setAutoenablesItems:NO];
 	[self setAlignment:NSCenterTextAlignment];
 	[self setArrowPosition:NSPopUpArrowAtBottom];
-	//[self setAltersStateOfSelectedItem:NO];
+	[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
 	
 	//[[self menu] setTitle:kAMOptionPopUpButtonTitle];  // TODO: a little hacky...
