@@ -37,9 +37,12 @@ extern NSString* const kAMOptionMenuDataDidChange;
 	NSMutableArray* _groups;
 	NSMutableDictionary* _valuesDict;
 	NSMutableDictionary* _stateDict;
+	
+	BOOL _shouldSeparateSections;
 }
 
 @property (nonatomic, readonly) NSString* summaryString;
+@property (nonatomic) BOOL shouldSeparateSections;
 
 //- (NSArray*) optionGroups;
 //- (void) setSections:(NSArray*)sections;

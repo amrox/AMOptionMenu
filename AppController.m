@@ -22,6 +22,9 @@
 {	
 	ds = [[AMOptionMenuDataSource alloc] init];
 	
+	// -- uncomment the following to add separators between sections
+	//ds.shouldSeparateSections = YES;
+	
 	NSArray* sections = [NSArray arrayWithObjects:
 						 [AMOptionMenuItem itemWithIdentifier:@"Color" title:@"Color"],
 						 [AMOptionMenuItem itemWithIdentifier:@"Dinosaurs" title:@"Dinosaurs"],

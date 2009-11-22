@@ -76,6 +76,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 @synthesize groups = _groups;
 @synthesize valuesDict = _valuesDict;
+@synthesize shouldSeparateSections = _shouldSeparateSections;
 
 - (id) init
 {
@@ -121,6 +122,13 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 		{
 			[array addObject:[self menuItemForOption:value inGroup:group]];
 		}
+		
+		// -- don't add the separator for the last item. Might be more efficient way to do, but it's a small data set.
+		if( [self shouldSeparateSections] && [[self optionGroups] lastObject] != group )
+		{
+			[array addObject:[NSMenuItem separatorItem]];
+		}
+
 	}
 	return array;
 }
