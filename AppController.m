@@ -17,9 +17,8 @@
 
 
 -(void)applicationDidFinishLaunching:(NSNotification*)aNotification
-//- (void) awakeFromNib  // TODO: fix awake from nib timinig
-{
-	
+//- (void) awakeFromNib  // TODO: fix awake from nib timing
+{	
 	ds = [[AMOptionMenuDataSource alloc] init];
 	
 	NSArray* sections = [NSArray arrayWithObjects:
@@ -43,9 +42,6 @@
 								nil];
 	[valuesDict setObject:dinosaurOptions forKey:@"Dinosaurs"];
 
-//	[ds setOptions:dinosaurOptions forSectionWithIdentifier:@"Dinosaurs"];
-	
-//	NSMenu* newMenu1 = [ds createMenuWithTitle:@"Stuff"];
 	
 	[ds setOptionGroups:sections andValues:valuesDict];
 	
@@ -55,10 +51,8 @@
 	
 
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
-	
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
 	[myPopupButton setDataSource:ds];
-	
 	[[window contentView] addSubview:myPopupButton];
 }
 
@@ -71,7 +65,7 @@
 
 - (IBAction) setReallyAwesome:(id)sender
 {
-	[ds setValue:@"ReallyAwesome" forKeyPath:@"Dinosaurs"];
+	[ds setValue:[NSNumber numberWithBool:YES] forKeyPath:@"Dinosaurs.isReallyAwesome"];
 }
 
 

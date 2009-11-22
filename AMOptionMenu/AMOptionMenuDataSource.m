@@ -155,7 +155,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 	[menuItem setTarget:self];
 	[menuItem setEnabled:YES];
 	
-	NSString* keypath = [NSString stringWithFormat:@"%@.%@", [group identifier], [option identifier]];
+	NSString* keypath = [NSString stringWithFormat:@"%@.is%@", [group identifier], [option identifier]];
 	[menuItem setRepresentedObject:keypath];
 
 	NSDictionary *bindingOptions = nil;
@@ -219,7 +219,8 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 		if( [_valuesDict objectForKey:groupKey] )
 		{
-			if( [[_stateDict objectForKey:groupKey] isEqual:optionKey] )
+			NSString* valueWithIsPrefix = [NSString stringWithFormat:@"is%@", [_stateDict objectForKey:groupKey]];
+			if( [valueWithIsPrefix isEqual:optionKey] )
 			{
 				NSLog( @"valueForKeyPath:%@ is YES", keyPath );
 				return [NSNumber numberWithBool:YES];
@@ -244,13 +245,18 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 		NSString* sectionKey = [keyPathComponents objectAtIndex:0];
 		NSString* optionKey = [keyPathComponents objectAtIndex:1];		
 		
-		if( [_valuesDict objectForKey:sectionKey] )
+		if( [optionKey hasPrefix:@"is"] )
 		{
-			if( [value boolValue] )
+			NSString* option = [optionKey substringFromIndex:2];
+			
+			if( [_valuesDict objectForKey:sectionKey] )
 			{
-				[self setValue:optionKey forKey:sectionKey];
+				if( [value boolValue] )
+				{
+					[self setValue:option forKey:sectionKey];
+				}
+				return;
 			}
-			return;
 		}
 	}
 	[super setValue:value forKeyPath:keyPath];
@@ -283,8 +289,6 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 }
 
 
-#pragma mark NSMenu Delegate Methods
-
 - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataWillChange object:self];
@@ -309,15 +313,6 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 {
 	return [[_stateDict copy] autorelease];
 }
-
-// THOUGHT: bind to Dinosaurs.Awesome.isSelected ????
-
-// THOUGHT: 
-// valueForKeyPath:Dinosaurs.Awesome is NO
-// valueForKeyPath:Dinosaurs.ReallyAwesome is YES
-// CHANGE TO:??
-// valueForKeyPath:Dinosaurs.isAwesome is NO
-// valueForKeyPath:Dinosaurs.isReallyAwesome is YES
 
 @end
 
