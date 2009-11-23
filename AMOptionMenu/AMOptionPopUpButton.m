@@ -24,10 +24,9 @@
 - (void) configure
 {
 	NSDictionary* titleBindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-										 @"(no data)", NSNullPlaceholderBindingOption,
+										 @"(No Data Source)", NSNullPlaceholderBindingOption,
 										 nil];
-	[self bind:@"title" toObject:self withKeyPath:@"cell.optionMenuDataSource.summaryString" options:titleBindingOptions];
-	
+	[self bind:@"title" toObject:self withKeyPath:@"cell.optionMenuDataSource.summaryString" options:titleBindingOptions];	
 }
 
 

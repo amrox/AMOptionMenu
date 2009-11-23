@@ -30,7 +30,7 @@
 	[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
 		
-	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"(No Data Source)" action:nil keyEquivalent:@""];
+	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 	[self setMenuItem:titleItem];
 	[titleItem release];
 }

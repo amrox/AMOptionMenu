@@ -16,14 +16,8 @@
 @implementation AppController
 
 
-- (void) awakeFromNib  // TODO: fix awake from nib timing
-{
-	NSLog( @"awakeFromNib" );
-}
 
-
--(void)applicationDidFinishLaunching:(NSNotification*)aNotification
-//- (void) awakeFromNib  // TODO: fix awake from nib timing
+- (void) awakeFromNib
 {	
 	ds = [[AMOptionMenuDataSource alloc] init];
 	
@@ -41,6 +35,7 @@
 							 [AMOptionMenuItem itemWithIdentifier:@"Red" title:@"Red"],
 							 [AMOptionMenuItem itemWithIdentifier:@"Green" title:@"Green"],
 							 [AMOptionMenuItem itemWithIdentifier:@"Blue" title:@"Blue"],
+				
 							 nil];
 	[valuesDict setObject:colorOptions forKey:@"Color"];
 	
