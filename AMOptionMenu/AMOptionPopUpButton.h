@@ -15,10 +15,10 @@
 
 }
 
-@property (nonatomic, retain) AMOptionMenuDataSource* dataSource;
+@property (nonatomic, retain) AMOptionMenuDataSource* optionMenuDataSource;
 
-
-//- (id)initWithFrame:(NSRect)frameRect;
+// -- or something
+// @property (nonatomic) BOOL smartTitleTruncation
 
 
 @end

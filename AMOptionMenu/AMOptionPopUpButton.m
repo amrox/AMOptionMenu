@@ -20,15 +20,75 @@
     return [AMOptionPopUpButtonCell class];
 }
 
-- (AMOptionMenuDataSource*) dataSource
+
+- (void) configure
 {
-	return [[self cell] dataSource];
+	NSDictionary* titleBindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+										 @"(no data)", NSNullPlaceholderBindingOption,
+										 nil];
+	[self bind:@"title" toObject:self withKeyPath:@"cell.optionMenuDataSource.summaryString" options:titleBindingOptions];
+	
 }
 
 
-- (void) setDataSource:(AMOptionMenuDataSource*) dataSource
+- (id) initWithFrame:(NSRect)buttonFrame pullsDown:(BOOL)flag
+{
+	self = [super initWithFrame:buttonFrame pullsDown:flag];
+	if( self )
+	{
+		[self configure];
+	}
+	return self;
+}
+
+
+- (void) awakeFromNib
+{
+	[self configure];	
+}
+
+
+- (AMOptionMenuDataSource*) optionMenuDataSource
+{
+	return [[self cell] optionMenuDataSource];
+}
+
+
+- (void) setOptionMenuDataSource:(AMOptionMenuDataSource*) dataSource
 {
 	[[self cell] setOptionMenuDataSource:dataSource];
 }
+
+
+- (void) setTitle:(NSString*)title
+{
+	NSRect titleRect = [[self cell] titleRectForBounds:[self bounds]];
+	NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+								[self font], NSFontAttributeName,
+								nil];
+	
+	NSAttributedString* tmpString = [[[NSAttributedString alloc] initWithString:title attributes:attributes] autorelease];
+	
+	//NSLog( @"title string size: %@", NSStringFromSize( [tmpString size] ) );
+	//NSLog( @"control text size: %@", NSStringFromSize( titleRect.size) );
+
+	if( [tmpString size].width > titleRect.size.width )
+	{
+		// -- try to trim it down
+		
+		NSRange range = [title rangeOfString:@"|" options:NSBackwardsSearch];
+		if( range.location != NSNotFound )
+		{
+			NSString* newTitle = [[title substringToIndex:range.location]
+								  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			
+			[self setTitle:newTitle];
+			return;
+		}
+	}
+	
+	[super setTitle:title];
+}
+
 
 @end

@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="453"/>
 			<integer value="372"/>
 			<integer value="470"/>
+			<integer value="453"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1130,12 +1130,12 @@
 						<object class="NSPopUpButton" id="727582522">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 168}, {245, 26}}</string>
+							<string key="NSFrame">{{17, 168}, {100, 26}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="1069042739">
 								<int key="NSCellFlags">-2076049856</int>
-								<int key="NSCellFlags2">2048</int>
+								<int key="NSCellFlags2">2560</int>
 								<object class="NSFont" key="NSSupport" id="964468356">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -2435,9 +2435,9 @@
 						<reference key="object" ref="439893737"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="727582522"/>
 							<reference ref="56618192"/>
 							<reference ref="25211713"/>
+							<reference ref="727582522"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -3067,6 +3067,7 @@
 					<string>454.IBPluginDependency</string>
 					<string>455.IBPluginDependency</string>
 					<string>456.IBPluginDependency</string>
+					<string>459.CustomClassName</string>
 					<string>459.IBPluginDependency</string>
 					<string>460.CustomClassName</string>
 					<string>460.IBPluginDependency</string>
@@ -3306,6 +3307,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>AMOptionPopUpButton</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>AMOptionPopUpButtonCell</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3382,6 +3384,14 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
+					<string key="className">AMOptionPopUpButton</string>
+					<string key="superclassName">NSPopUpButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">AMOptionMenu/AMOptionPopUpButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">AMOptionPopUpButtonCell</string>
 					<string key="superclassName">NSPopUpButtonCell</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3415,7 +3425,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSPopUpButton</string>
+							<string>AMOptionPopUpButton</string>
 							<string>NSMenuItem</string>
 							<string>NSWindow</string>
 						</object>

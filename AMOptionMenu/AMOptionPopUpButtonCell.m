@@ -33,11 +33,6 @@
 	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"(No Data Source)" action:nil keyEquivalent:@""];
 	[self setMenuItem:titleItem];
 	[titleItem release];
-	
-	NSDictionary* titleBindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-										 @"(no data)", NSNullPlaceholderBindingOption,
-										 nil];
-	[self bind:@"title" toObject:self withKeyPath:@"optionMenuDataSource.summaryString" options:titleBindingOptions];
 }
 
 
@@ -115,6 +110,5 @@
 	[newMenu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
 	[self setMenu:newMenu];
 }
-
 
 @end

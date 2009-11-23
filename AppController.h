@@ -13,7 +13,7 @@
 
 @interface AppController : NSObject {
 
-	IBOutlet NSPopUpButton* popUpButton;
+	IBOutlet AMOptionPopUpButton* popUpButton;
 	
 	IBOutlet NSMenuItem* testMenu;
 	

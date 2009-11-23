@@ -16,6 +16,11 @@
 @implementation AppController
 
 
+- (void) awakeFromNib  // TODO: fix awake from nib timing
+{
+	NSLog( @"awakeFromNib" );
+}
+
 
 -(void)applicationDidFinishLaunching:(NSNotification*)aNotification
 //- (void) awakeFromNib  // TODO: fix awake from nib timing
@@ -49,14 +54,14 @@
 	
 	[ds setOptionGroups:sections andValues:valuesDict];
 	
-	[[popUpButton cell] setOptionMenuDataSource:ds];
+	[popUpButton setOptionMenuDataSource:ds];
 		
 	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
 	
 
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame pullsDown:YES];
-	[myPopupButton setDataSource:ds];
+	[myPopupButton setOptionMenuDataSource:ds];
 	[[window contentView] addSubview:myPopupButton];
 }
 
