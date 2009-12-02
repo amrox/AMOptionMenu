@@ -8,20 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-@class AMOptionMenuDataSource;
+@class AMOptionMenuController;
 @class AMOptionPopUpButton;
 
 @interface AppController : NSObject {
 
-	IBOutlet AMOptionPopUpButton* popUpButton;
+	AMOptionPopUpButton* popUpButton;
 	
 	IBOutlet NSMenuItem* testMenu;
 	
 	IBOutlet NSWindow* window;
 	
-	AMOptionMenuDataSource* ds;
+	AMOptionMenuController* ds;
 
 }
+
+@property (assign) IBOutlet AMOptionPopUpButton* popUpButton;
 
 - (IBAction) setBlue:(id)sender;
 - (IBAction) setReallyAwesome:(id)sender;

@@ -6,7 +6,7 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "AMOptionMenuDataSource.h"
+#import "AMOptionMenuController.h"
 
 
 NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
@@ -56,15 +56,16 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 #pragma mark -
 
-NSString* const kAMOptionMenuDataWillChange = @"kAMOptionMenuDataWillChange";
-NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
+NSString* const kAMOptionMenuContentWillChange = @"kAMOptionMenuDataWillChange";
+NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 
-@interface AMOptionMenuDataSource ()
+@interface AMOptionMenuController ()
 
 @property (nonatomic, retain) NSArray* groups;
 @property (nonatomic, retain) NSDictionary* valuesDict;
 
+- (NSArray*) createMenuItems;
 - (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier;
 - (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group;
 - (NSMenuItem*) menuItemForOption:(AMOptionMenuItem*)option inGroup:(AMOptionMenuItem*)group;
@@ -72,7 +73,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 @end
 
-@implementation AMOptionMenuDataSource
+@implementation AMOptionMenuController
 
 @synthesize groups = _groups;
 @synthesize valuesDict = _valuesDict;
@@ -133,18 +134,28 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 	return array;
 }
 
-- (NSMenu*) createMenuWithTitle:(NSString*)title
-{
-	NSMenu* menu = [[NSMenu alloc] initWithTitle:title];
-	[menu setAutoenablesItems:NO];
 
+- (void) insertItemsInMenu:(NSMenu*)menu atIndex:(NSInteger)insertIndex
+{
 	for( NSMenuItem* item in [self createMenuItems] )
 	{
-		[menu addItem:item];
+		[menu insertItem:item atIndex:insertIndex++];
 	}
-
-	return [menu autorelease];
 }
+
+
+//- (NSMenu*) createMenuWithTitle:(NSString*)title
+//{
+//	NSMenu* menu = [[NSMenu alloc] initWithTitle:title];
+//	[menu setAutoenablesItems:NO];
+//
+//	for( NSMenuItem* item in [self createMenuItems] )
+//	{
+//		[menu addItem:item];
+//	}
+//
+//	return [menu autorelease];
+//}
 
 
 - (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group
@@ -299,7 +310,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 
 - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataWillChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentWillChange object:self];
 	
 	[self setGroups:groups];
 	[self setValuesDict:values];
@@ -313,7 +324,7 @@ NSString* const kAMOptionMenuDataDidChange = @"kAMOptionMenuDataDidChange";
 		}
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuDataDidChange object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentDidChange object:self];
 }
 
 

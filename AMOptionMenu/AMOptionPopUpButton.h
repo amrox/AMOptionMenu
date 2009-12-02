@@ -8,17 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AMOptionMenuDataSource;
+@class AMOptionMenuController;
 
 @interface AMOptionPopUpButton : NSPopUpButton
 {
-
+	BOOL _smartTitleTruncation;
 }
 
-@property (nonatomic, retain) AMOptionMenuDataSource* optionMenuDataSource;
+@property (nonatomic, retain) AMOptionMenuController* optionMenuController;
 
-// -- or something
-// @property (nonatomic) BOOL smartTitleTruncation
+@property (nonatomic, assign) BOOL smartTitleTruncation;
 
 
 @end

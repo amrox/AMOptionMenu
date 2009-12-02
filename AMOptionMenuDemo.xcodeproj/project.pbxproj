@@ -11,7 +11,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		B3DADB5B100589E700789685 /* AMOptionMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADB5A100589E700789685 /* AMOptionMenuDataSource.m */; };
+		B3DADB5B100589E700789685 /* AMOptionMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADB5A100589E700789685 /* AMOptionMenuController.m */; };
 		B3DADC3410058E5E00789685 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DADC3310058E5E00789685 /* AppController.m */; };
 		B3DAE0981006823F00789685 /* AMOptionPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DAE0971006823F00789685 /* AMOptionPopUpButton.m */; };
 		E12A723C10077C000049FD9E /* AMOptionPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E12A723B10077C000049FD9E /* AMOptionPopUpButtonCell.m */; };
@@ -28,8 +28,8 @@
 		32CA4F630368D1EE00C91783 /* AMOptionMenuDemo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionMenuDemo_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* AMOptionMenuDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AMOptionMenuDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3DADB59100589E700789685 /* AMOptionMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionMenuDataSource.h; sourceTree = "<group>"; };
-		B3DADB5A100589E700789685 /* AMOptionMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOptionMenuDataSource.m; sourceTree = "<group>"; };
+		B3DADB59100589E700789685 /* AMOptionMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionMenuController.h; sourceTree = "<group>"; };
+		B3DADB5A100589E700789685 /* AMOptionMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOptionMenuController.m; sourceTree = "<group>"; };
 		B3DADC3210058E5E00789685 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		B3DADC3310058E5E00789685 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		B3DAE0961006823F00789685 /* AMOptionPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOptionPopUpButton.h; sourceTree = "<group>"; };
@@ -129,8 +129,8 @@
 		B3DADC0D10058E1500789685 /* AMOptionMenu */ = {
 			isa = PBXGroup;
 			children = (
-				B3DADB59100589E700789685 /* AMOptionMenuDataSource.h */,
-				B3DADB5A100589E700789685 /* AMOptionMenuDataSource.m */,
+				B3DADB59100589E700789685 /* AMOptionMenuController.h */,
+				B3DADB5A100589E700789685 /* AMOptionMenuController.m */,
 				B3DAE0961006823F00789685 /* AMOptionPopUpButton.h */,
 				B3DAE0971006823F00789685 /* AMOptionPopUpButton.m */,
 				E12A723A10077C000049FD9E /* AMOptionPopUpButtonCell.h */,
@@ -195,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				B3DADB5B100589E700789685 /* AMOptionMenuDataSource.m in Sources */,
+				B3DADB5B100589E700789685 /* AMOptionMenuController.m in Sources */,
 				B3DADC3410058E5E00789685 /* AppController.m in Sources */,
 				B3DAE0981006823F00789685 /* AMOptionPopUpButton.m in Sources */,
 				E12A723C10077C000049FD9E /* AMOptionPopUpButtonCell.m in Sources */,

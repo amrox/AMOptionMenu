@@ -8,18 +8,18 @@
 
 #import "AppController.h"
 
-#import "AMOptionMenuDataSource.h"
+#import "AMOptionMenuController.h"
 
 #import "AMOptionPopUpButton.h"
 #import "AMOptionPopUpButtonCell.h"
 
 @implementation AppController
 
-
+@synthesize popUpButton;
 
 - (void) awakeFromNib
 {	
-	ds = [[AMOptionMenuDataSource alloc] init];
+	ds = [[AMOptionMenuController alloc] init];
 	
 	// -- uncomment the following to add separators between sections
 	//ds.shouldSeparateSections = YES;
@@ -49,14 +49,19 @@
 	
 	[ds setOptionGroups:sections andValues:valuesDict];
 	
-	[popUpButton setOptionMenuDataSource:ds];
+	[popUpButton setOptionMenuController:ds];
+	popUpButton.smartTitleTruncation = YES;
 		
-	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
+	NSMenu* thingsMenu = [[NSMenu alloc] initWithTitle:@"Things"];
+	[ds insertItemsInMenu:thingsMenu atIndex:0];
 	
+//	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
+	[testMenu setSubmenu:thingsMenu];
+	[thingsMenu release];
 
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame pullsDown:YES];
-	[myPopupButton setOptionMenuDataSource:ds];
+	[myPopupButton setOptionMenuController:ds];
 	[[window contentView] addSubview:myPopupButton];
 }
 

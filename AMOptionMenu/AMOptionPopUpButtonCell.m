@@ -8,7 +8,7 @@
 
 #import "AMOptionPopUpButtonCell.h"
 
-#import "AMOptionMenuDataSource.h"
+#import "AMOptionMenuController.h"
 
 
 @interface AMOptionPopUpButtonCell ()
@@ -18,7 +18,7 @@
 
 @implementation AMOptionPopUpButtonCell
 
-@synthesize optionMenuDataSource = _optionMenuDataSource;
+@synthesize optionMenuController = _optionMenuController;
 
 
 - (void) configure
@@ -62,7 +62,7 @@
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_optionMenuDataSource release];
+	[_optionMenuController release];
 	[super dealloc];
 }
 
@@ -80,21 +80,20 @@
 }
 
 
-- (void) setOptionMenuDataSource:(AMOptionMenuDataSource*)dataSource
+- (void) setOptionMenuController:(AMOptionMenuController*)controller
 {
-	if( dataSource == _optionMenuDataSource )
+	if( controller == _optionMenuController )
 		return;
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuDataDidChange object:_optionMenuDataSource];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuContentDidChange object:_optionMenuController];
 	
-	[dataSource retain];
-	[_optionMenuDataSource release];
-	_optionMenuDataSource = dataSource;
+	[controller retain];
+	[_optionMenuController release];
+	_optionMenuController = controller;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuDataDidChange object:_optionMenuDataSource];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuContentDidChange object:_optionMenuController];
 	
 	[self updateMenu];
-	
 }
 
 
@@ -106,9 +105,12 @@
 
 - (void) updateMenu
 {
-	NSMenu* newMenu = [[self optionMenuDataSource] createMenuWithTitle:@""];
+	NSMenu* newMenu = [[NSMenu alloc] initWithTitle:@""];
+	[newMenu setAutoenablesItems:NO];
+	[[self optionMenuController] insertItemsInMenu:newMenu atIndex:0];
 	[newMenu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
 	[self setMenu:newMenu];
+	[newMenu release];
 }
 
 @end

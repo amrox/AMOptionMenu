@@ -28,11 +28,11 @@ extern NSString* const kAMOptionPopUpButtonTitle;
 @end
 
 
-extern NSString* const kAMOptionMenuDataWillChange;
-extern NSString* const kAMOptionMenuDataDidChange;
+extern NSString* const kAMOptionMenuContentWillChange;
+extern NSString* const kAMOptionMenuContentDidChange;
 
 
-@interface AMOptionMenuDataSource : NSObject
+@interface AMOptionMenuController : NSObject
 {	
 	NSMutableArray* _groups;
 	NSMutableDictionary* _valuesDict;
@@ -51,9 +51,9 @@ extern NSString* const kAMOptionMenuDataDidChange;
 
 - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values;
 
-- (NSMenu*) createMenuWithTitle:(NSString*)title;
+//- (NSMenu*) createMenuWithTitle:(NSString*)title;
 
-- (NSArray*) createMenuItems;
+- (void) insertItemsInMenu:(NSMenu*)menu atIndex:(NSInteger)insertIndex;
 
 - (NSDictionary*) state;
 

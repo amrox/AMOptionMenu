@@ -8,15 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class AMOptionMenuDataSource;
+@class AMOptionMenuController;
 
 @interface AMOptionPopUpButtonCell : NSPopUpButtonCell
 {
-	AMOptionMenuDataSource* _optionMenuDataSource;
+	AMOptionMenuController* _optionMenuController;
 }
 
 
-@property (nonatomic, retain) AMOptionMenuDataSource* optionMenuDataSource;
+@property (nonatomic, retain) AMOptionMenuController* optionMenuController;
 
 
 @end
