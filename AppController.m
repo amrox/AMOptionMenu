@@ -19,62 +19,52 @@
 
 - (void) awakeFromNib
 {	
-	ds = [[AMOptionMenuController alloc] init];
+	optionMenuController = [[AMOptionMenuController alloc] init];
 	
 	// -- uncomment the following to add separators between sections
-	//ds.shouldSeparateSections = YES;
-	
-	NSArray* sections = [NSArray arrayWithObjects:
-						 [AMOptionMenuItem itemWithIdentifier:@"Color" title:@"Color"],
-						 [AMOptionMenuItem itemWithIdentifier:@"Dinosaurs" title:@"Dinosaurs"],
-						 nil];
-	
-	
-	NSMutableDictionary* valuesDict = [NSMutableDictionary dictionary];
-	NSArray* colorOptions = [NSArray arrayWithObjects:
-							 [AMOptionMenuItem itemWithIdentifier:@"Red" title:@"Red"],
-							 [AMOptionMenuItem itemWithIdentifier:@"Green" title:@"Green"],
-							 [AMOptionMenuItem itemWithIdentifier:@"Blue" title:@"Blue"],
-				
-							 nil];
-	[valuesDict setObject:colorOptions forKey:@"Color"];
-	
-	
-	NSArray* dinosaurOptions = [NSArray arrayWithObjects:
-								[AMOptionMenuItem itemWithIdentifier:@"Awesome" title:@"Awesome"],
-								[AMOptionMenuItem itemWithIdentifier:@"ReallyAwesome" title:@"Really Awesome" shortTitle:@"R. Awe."],
-								nil];
-	[valuesDict setObject:dinosaurOptions forKey:@"Dinosaurs"];
+	//optionMenuController.shouldSeparateSections = YES;
 
+	// -- add some options in code
+	NSArray* colorAlternatives = [NSArray arrayWithObjects:
+								  [AMOptionMenuItem itemWithIdentifier:@"Red" title:@"Red"],
+								  [AMOptionMenuItem itemWithIdentifier:@"Green" title:@"Green"],
+								  [AMOptionMenuItem itemWithIdentifier:@"Blue" title:@"Blue"],
+								  nil];	
+	[optionMenuController insertOptionWithIdentifier:@"Color" title:@"Color" atIndex:0];
+	[optionMenuController setAlternatives:colorAlternatives forOptionWithIdentifier:@"Color"];
 	
-	[ds setOptionGroups:sections andValues:valuesDict];
 	
-	[popUpButton setOptionMenuController:ds];
+	// -- add some options form a resource file
+	NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"DinosaurOptions" ofType:@"plist"];
+	[optionMenuController insertOptionsFromPropertyListWithURL:[NSURL fileURLWithPath:plistPath] atIndex:1];
+	
+	// -- configure a popp button in a nib
+	[popUpButton setOptionMenuController:optionMenuController];
 	popUpButton.smartTitleTruncation = YES;
 		
+	// -- create a menu 
 	NSMenu* thingsMenu = [[NSMenu alloc] initWithTitle:@"Things"];
-	[ds insertItemsInMenu:thingsMenu atIndex:0];
-	
-//	[testMenu setSubmenu:[ds createMenuWithTitle:@"Things"]];
+	[optionMenuController insertItemsInMenu:thingsMenu atIndex:0];
 	[testMenu setSubmenu:thingsMenu];
 	[thingsMenu release];
 
+	// -- create a popup button programmatically
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame pullsDown:YES];
-	[myPopupButton setOptionMenuController:ds];
+	[myPopupButton setOptionMenuController:optionMenuController];
 	[[window contentView] addSubview:myPopupButton];
 }
 
 
 - (IBAction) setBlue:(id)sender
 {
-	[ds setValue:@"Blue" forKeyPath:@"Color"];
+	[optionMenuController setValue:@"Blue" forKeyPath:@"Color"];
 }
 
 
 - (IBAction) setReallyAwesome:(id)sender
 {
-	[ds setValue:[NSNumber numberWithBool:YES] forKeyPath:@"Dinosaurs.isReallyAwesome"];
+	[optionMenuController setValue:[NSNumber numberWithBool:YES] forKeyPath:@"Dinosaurs.isReallyAwesome"];
 }
 
 

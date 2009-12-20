@@ -34,7 +34,7 @@ extern NSString* const kAMOptionMenuContentDidChange;
 
 @interface AMOptionMenuController : NSObject
 {	
-	NSMutableArray* _groups;
+	NSMutableArray* _options;
 	NSMutableDictionary* _valuesDict;
 	NSMutableDictionary* _stateDict;
 	
@@ -42,19 +42,20 @@ extern NSString* const kAMOptionMenuContentDidChange;
 }
 
 @property (nonatomic, readonly) NSString* summaryString;
-@property (nonatomic) BOOL shouldSeparateSections;
+@property (nonatomic) BOOL shouldSeparateOptions;
 
-//- (NSArray*) optionGroups;
-//- (void) setSections:(NSArray*)sections;
 
-//- (void) setOptions:(NSArray*)options forSectionWithIdentifier:(NSString*)identifier;
+// - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values;
 
-- (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values;
+- (void) insertOptionWithIdentifier:(NSString*)identifier title:(NSString*)title atIndex:(NSInteger)index;
+- (void) setAlternatives:(NSArray*)alternatives forOptionWithIdentifier:(NSString*)optionIdentifier;
+- (void) insertOption:(AMOptionMenuItem*)option atIndex:(NSInteger)insertIndex withAternatives:(NSArray*)alternatives;
 
-//- (NSMenu*) createMenuWithTitle:(NSString*)title;
+- (BOOL) insertOptionsFromPropertyListWithURL:(NSURL*)url atIndex:(NSInteger)insertIndex;
 
 - (void) insertItemsInMenu:(NSMenu*)menu atIndex:(NSInteger)insertIndex;
 
+// TODO: make a property?
 - (NSDictionary*) state;
 
 @end

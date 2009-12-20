@@ -19,7 +19,7 @@
 	
 	IBOutlet NSWindow* window;
 	
-	AMOptionMenuController* ds;
+	AMOptionMenuController* optionMenuController;
 
 }
 
