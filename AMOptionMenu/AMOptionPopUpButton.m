@@ -62,6 +62,12 @@
 }
 
 
+- (id) initWithFrame:(NSRect)buttonFrame
+{
+	return [self initWithFrame:buttonFrame pullsDown:YES];
+}
+
+
 - (void) awakeFromNib
 {
 	[self configure];	

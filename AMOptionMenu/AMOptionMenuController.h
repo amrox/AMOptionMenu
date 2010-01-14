@@ -58,14 +58,16 @@ extern NSString* const kAMOptionMenuContentDidChange;
 	NSMutableDictionary* _valuesDict;
 	NSMutableDictionary* _stateDict;
 	
+	BOOL _allowUnknownOptions;
 	BOOL _shouldSeparateSections;
+	NSUInteger _maxValuesInSummary;
 }
 
 @property (nonatomic, readonly) NSString* summaryString;
-@property (nonatomic) BOOL shouldSeparateOptions;
+@property (nonatomic, assign) BOOL shouldSeparateOptions;
+@property (nonatomic, assign) BOOL allowUnkownOptions;
+@property (nonatomic, assign) NSUInteger maxValuesInSummary; // defaults to NSUIntegerMax;
 
-
-// - (void) setOptionGroups:(NSArray*)groups andValues:(NSDictionary*)values;
 
 - (void) insertOptionWithIdentifier:(NSString*)identifier title:(NSString*)title atIndex:(NSInteger)index;
 - (void) setAlternatives:(NSArray*)alternatives forOptionWithIdentifier:(NSString*)optionIdentifier;

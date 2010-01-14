@@ -58,6 +58,13 @@
 	NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"DinosaurOptions" ofType:@"plist"];
 	[optionMenuController insertOptionsFromPropertyListWithURL:[NSURL fileURLWithPath:plistPath] atIndex:1];
 	
+	// -- useful for setting some state that isn't represented by a menu item
+	[optionMenuController setAllowUnkownOptions:YES];
+	[optionMenuController setValue:@"beep" forKey:@"honk"];
+	
+	// -- to limit the max number of values in the summary
+	//[optionMenuController setMaxValuesInSummary:1];
+	
 	// -- configure a popp button in a nib
 	[popUpButton setOptionMenuController:optionMenuController];
 	popUpButton.smartTitleTruncation = YES;
@@ -70,7 +77,7 @@
 
 	// -- create a popup button programmatically
 	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
-	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame pullsDown:YES];
+	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
 	[myPopupButton setOptionMenuController:optionMenuController];
 	[[window contentView] addSubview:myPopupButton];
 }

@@ -39,5 +39,7 @@
 
 @property (nonatomic, assign) BOOL smartTitleTruncation;
 
+- (id) initWithFrame:(NSRect)buttonFrame;
+
 
 @end

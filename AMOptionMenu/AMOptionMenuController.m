@@ -98,7 +98,8 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 @synthesize options = _options;
 @synthesize valuesDict = _valuesDict;
 @synthesize shouldSeparateOptions = _shouldSeparateSections;
-
+@synthesize allowUnkownOptions = _allowUnknownOptions;
+@synthesize maxValuesInSummary = _maxValuesInSummary;
 - (id) init
 {
 	self = [super init];
@@ -107,6 +108,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 		_options = [[NSMutableArray alloc] init];
 		_valuesDict = [[NSMutableDictionary alloc] init];
 		_stateDict = [[NSMutableDictionary alloc] init];
+		_maxValuesInSummary = NSUIntegerMax;
 	}
 	return self;
 }
@@ -215,7 +217,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-	if( [_valuesDict objectForKey:key] )
+	if( [self allowUnkownOptions] || [_valuesDict objectForKey:key] )
 	{
 		NSLog( @"settingValue:%@ forKey:%@", value, key );
 		[self willChangeValueForKey:@"summaryString"];
@@ -285,8 +287,12 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 - (NSString*) summaryString
 {
 	NSMutableString* string = [NSMutableString string];
+	NSUInteger count = 0;
 	for( AMOptionMenuItem* group in [self options] )
 	{
+		if( count++ == [self maxValuesInSummary] )
+			break;
+				
 		if( [string length] )
 			[string appendString:@" | "];
 		
