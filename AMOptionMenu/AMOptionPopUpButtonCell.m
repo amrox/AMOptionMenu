@@ -45,7 +45,6 @@
 {
 	[self setPullsDown:YES];
 	[self setAutoenablesItems:NO];
-	[self setAlignment:NSCenterTextAlignment];
 	[self setArrowPosition:NSPopUpArrowAtBottom];
 	[self setAltersStateOfSelectedItem:NO];
 	[self setUsesItemFromMenu:NO];
