@@ -1,4 +1,14 @@
 AMOptionMenu
 ------------
 
-This is a sentence that contains words, which contain letters.
+AMOptionMenu is a Cocoa multi-option popup menu, similar to Xcode's "Overview" toolbar item. It's features include:
+
+ * Multiple controls can be driven by the same data source
+ * Setting state via key-value coding
+ * Populating a standard NSMenu instead of/addition to popup buttons
+ * Optional short titles for summaries
+ * Explicitly or automatically limiting the number of items in the summary.
+ * Instantiating controls from code or nib
+ * Loading data from code or external plists
+
+
