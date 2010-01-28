@@ -42,7 +42,7 @@
 	optionMenuController = [[AMOptionMenuController alloc] init];
 	
 	// -- uncomment the following to add separators between sections
-	//optionMenuController.shouldSeparateSections = YES;
+	optionMenuController.shouldSeparateOptions = YES;
 
 	// -- add some options in code
 	NSArray* colorAlternatives = [NSArray arrayWithObjects:
@@ -63,7 +63,7 @@
 	[optionMenuController setValue:@"beep" forKey:@"honk"];
 	
 	// -- to limit the max number of values in the summary
-	//[optionMenuController setMaxValuesInSummary:1];
+	[optionMenuController setMaxValuesInSummary:1];
 	
 	// -- configure a popp button in a nib
 	[popUpButton setOptionMenuController:optionMenuController];
@@ -80,6 +80,7 @@
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
 	[myPopupButton setOptionMenuController:optionMenuController];
 	[[window contentView] addSubview:myPopupButton];
+	[myPopupButton release];
 }
 
 

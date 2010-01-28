@@ -118,6 +118,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 {
 	[_options release];
 	[_valuesDict release];
+	[_stateDict release];
 	[super dealloc];
 }
 
