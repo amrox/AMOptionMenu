@@ -1130,20 +1130,25 @@
 						<object class="NSPopUpButton" id="727582522">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{17, 193}, {245, 26}}</string>
+							<string key="NSFrame">{{17, 201}, {245, 18}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="1069042739">
 								<int key="NSCellFlags">-2076049856</int>
-								<int key="NSCellFlags2">2560</int>
-								<object class="NSFont" key="NSSupport" id="964468356">
+								<int key="NSCellFlags2">133632</int>
+								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
-									<double key="NSSize">13</double>
-									<int key="NSfFlags">1044</int>
+									<double key="NSSize">11</double>
+									<int key="NSfFlags">3100</int>
 								</object>
 								<reference key="NSControlView" ref="727582522"/>
-								<int key="NSButtonFlags">109199615</int>
-								<int key="NSButtonFlags2">129</int>
+								<int key="NSButtonFlags">-2038284033</int>
+								<int key="NSButtonFlags2">160</int>
+								<object class="NSFont" key="NSAlternateImage">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">11</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
 								<int key="NSPeriodicDelay">400</int>
@@ -1207,7 +1212,11 @@
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Blue</string>
-								<reference key="NSSupport" ref="964468356"/>
+								<object class="NSFont" key="NSSupport" id="964468356">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">1044</int>
+								</object>
 								<reference key="NSControlView" ref="56618192"/>
 								<int key="NSButtonFlags">-2038284033</int>
 								<int key="NSButtonFlags2">129</int>
@@ -2481,10 +2490,10 @@
 						<reference key="object" ref="439893737"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="56618192"/>
 							<reference ref="25211713"/>
-							<reference ref="727582522"/>
 							<reference ref="123426043"/>
+							<reference ref="727582522"/>
+							<reference ref="56618192"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -3152,6 +3161,7 @@
 					<string>476.IBPluginDependency</string>
 					<string>485.IBPluginDependency</string>
 					<string>486.IBPluginDependency</string>
+					<string>487.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
 					<string>56.IBPluginDependency</string>
@@ -3316,9 +3326,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{209, 274}, {279, 237}}</string>
+					<string>{{210, 274}, {279, 237}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{209, 274}, {279, 237}}</string>
+					<string>{{210, 274}, {279, 237}}</string>
 					<integer value="1"/>
 					<string>{{33, 99}, {480, 360}}</string>
 					<string>{3.40282e+38, 3.40282e+38}</string>
@@ -3386,6 +3396,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{499, 553}, {83, 23}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

@@ -63,7 +63,7 @@
 	[optionMenuController setValue:@"beep" forKey:@"honk"];
 	
 	// -- to limit the max number of values in the summary
-	[optionMenuController setMaxValuesInSummary:1];
+	//[optionMenuController setMaxValuesInSummary:1];
 	
 	// -- configure a popp button in a nib
 	[popUpButton setOptionMenuController:optionMenuController];
@@ -76,9 +76,10 @@
 	[thingsMenu release];
 
 	// -- create a popup button programmatically
-	NSRect myFrame = NSMakeRect( 10, 10, 300, 30);
+	NSRect myFrame = NSMakeRect( 10, 10, 200, 30);
 	AMOptionPopUpButton* myPopupButton = [[AMOptionPopUpButton alloc] initWithFrame:myFrame];
 	[myPopupButton setOptionMenuController:optionMenuController];
+	[myPopupButton setAlignment:NSCenterTextAlignment];
 	[[window contentView] addSubview:myPopupButton];
 	[myPopupButton release];
 }
