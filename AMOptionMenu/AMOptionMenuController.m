@@ -5,7 +5,7 @@
 //  Created by Andy Mroczkowski on 7/8/09.
 //
 //  Copyright (c) 2009 Andy Mroczkowski
-//  
+//
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -13,10 +13,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//  
+//
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//  
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,7 +24,7 @@
 //  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 //  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//  
+//
 
 #import "AMOptionMenuController.h"
 
@@ -135,12 +135,12 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	for( AMOptionMenuItem* option in [self options] )
 	{
 		[array addObject:[self menuItemForGroup:option]];
-		
+
 		for( AMOptionMenuItem* value in [self optionValuesForGroupWithIdentifier:[option identifier]] )
 		{
 			[array addObject:[self menuItemForOption:value inGroup:option]];
 		}
-		
+
 		// -- don't add the separator for the last item. Might be more efficient way to do, but it's a small data set.
 		if( [self shouldSeparateOptions] && [[self options] lastObject] != option )
 		{
@@ -176,7 +176,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	[menuItem setIndentationLevel:1];
 	[menuItem setTarget:self];
 	[menuItem setEnabled:YES];
-	
+
 	NSString* keypath = [NSString stringWithFormat:@"%@.is%@", [group identifier], [option identifier]];
 	[menuItem setRepresentedObject:keypath];
 
@@ -211,7 +211,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 		NSLog( @"valueForUndefinedKey: %@ = %@", key, val );
 		return val;
 	}
-	
+
 	return [super valueForUndefinedKey:key];
 }
 
@@ -233,7 +233,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 - (id) valueForKeyPath:(NSString*)keyPath
 {
 	NSArray* keyPathComponents = [keyPath componentsSeparatedByString:@"."];
-	
+
 	if( [keyPathComponents count] == 2 )
 	{
 		NSString* groupKey = [keyPathComponents objectAtIndex:0];
@@ -250,7 +250,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 			else
 			{
 				NSLog( @"valueForKeyPath:%@ is NO", keyPath );
-				return [NSNumber numberWithBool:NO];				
+				return [NSNumber numberWithBool:NO];
 			}
 		}
 	}
@@ -265,12 +265,12 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	if( [keyPathComponents count] == 2 )
 	{
 		NSString* sectionKey = [keyPathComponents objectAtIndex:0];
-		NSString* optionKey = [keyPathComponents objectAtIndex:1];		
-		
+		NSString* optionKey = [keyPathComponents objectAtIndex:1];
+
 		if( [optionKey hasPrefix:@"is"] )
 		{
 			NSString* option = [optionKey substringFromIndex:2];
-			
+
 			if( [_valuesDict objectForKey:sectionKey] )
 			{
 				if( [value boolValue] )
@@ -293,13 +293,13 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	{
 		if( count++ == [self maxValuesInSummary] )
 			break;
-				
+
 		if( [string length] )
 			[string appendString:@" | "];
-		
+
 		// TODO: make nicer
 		NSString* optionId = [self valueForKey:[group identifier]];
-		
+
 		NSString* title = nil;
 		for( AMOptionMenuItem* menuItem in [_valuesDict objectForKey:[group identifier]] )
 		{
@@ -308,7 +308,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 				title = [menuItem titleForSummary];
 				break;
 			}
-		}		
+		}
 		[string appendFormat:@"%@", title];
 	}
 	return [NSString stringWithString:string];
@@ -345,7 +345,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentWillChange object:self];
 	AMOptionMenuItem* option = [AMOptionMenuItem itemWithIdentifier:identifier title:title];
-	[_options insertObject:option atIndex:index];	
+	[_options insertObject:option atIndex:index];
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentDidChange object:self];
 
 }
@@ -363,13 +363,13 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	NSArray* options = [NSArray arrayWithContentsOfURL:url];
 	if( !options )
 		return NO;
-	
+
 	for( NSDictionary* option in options )
 	{
 		NSString* optionIdentifier = [option objectForKey:@"identifier"];
 		NSString* optionTitle = [option objectForKey:@"title"];
 		[self insertOptionWithIdentifier:optionIdentifier title:optionTitle atIndex:insertIndex];
-		
+
 		NSArray* alternatives = [option objectForKey:@"alternatives"];
 		NSMutableArray* valueItems = [NSMutableArray arrayWithCapacity:[alternatives count]];
 		for( NSDictionary* value in alternatives )
