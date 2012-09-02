@@ -3,7 +3,9 @@ AMOptionMenu
 
 AMOptionMenu is a Cocoa multi-option popup menu, similar to Xcode's "Overview" toolbar item. It's features include:
 
-## <a href="http://f.cl.ly/items/2Q3g2i2A1H1K3I3W3u22/AMOptionMenu-demo.mov">Demo Video</a>
+<h2>
+<a href="http://f.cl.ly/items/2Q3g2i2A1H1K3I3W3u22/AMOptionMenu-demo.mov">Demo Video</a>
+</h2>
 
 <img src="https://github.com/amrox/AMOptionMenu/raw/master/screenshot.png" alt="Screenshot" />
 
