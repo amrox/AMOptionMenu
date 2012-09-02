@@ -5,7 +5,7 @@ AMOptionMenu is a Cocoa multi-option popup menu, similar to Xcode's "Overview" t
 
 <img src="https://github.com/amrox/AMOptionMenu/raw/master/screenshot.png" alt="Screenshot" />
 
-<video src="https://github.com/amrox/AMOptionMenu/raw/master/AMOptionMenu-demo.mov" alt="Demo video" />
+<a href="https://github.com/amrox/AMOptionMenu/raw/master/AMOptionMenu-demo.mov">Demo Video</a>
 
  * Multiple controls can be driven by the same data source
  * Setting state via key-value coding
