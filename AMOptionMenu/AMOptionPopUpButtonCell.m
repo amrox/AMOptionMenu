@@ -38,9 +38,6 @@
 
 @implementation AMOptionPopUpButtonCell
 
-@synthesize optionMenuController = _optionMenuController;
-
-
 - (void) configure
 {
 	[self setPullsDown:YES];
@@ -51,7 +48,6 @@
 
 	NSMenuItem* titleItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
 	[self setMenuItem:titleItem];
-	[titleItem release];
 }
 
 
@@ -81,8 +77,6 @@
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[_optionMenuController release];
-	[super dealloc];
 }
 
 
@@ -106,8 +100,6 @@
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuContentDidChange object:_optionMenuController];
 
-	[controller retain];
-	[_optionMenuController release];
 	_optionMenuController = controller;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuContentDidChange object:_optionMenuController];
@@ -129,7 +121,6 @@
 	[[self optionMenuController] insertItemsInMenu:newMenu atIndex:0];
 	[newMenu insertItemWithTitle:@"dummy" action:nil keyEquivalent:@"" atIndex:0];
 	[self setMenu:newMenu];
-	[newMenu release];
 }
 
 @end

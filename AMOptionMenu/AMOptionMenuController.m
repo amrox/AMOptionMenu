@@ -41,7 +41,7 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 + (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle
 {
-	AMOptionMenuItem* item = [[[AMOptionMenuItem alloc] init] autorelease];
+	AMOptionMenuItem* item = [[AMOptionMenuItem alloc] init];
 	[item setIdentifier:identifier];
 	[item setTitle:title];
 	[item setShortTitle:shortTitle];
@@ -54,23 +54,12 @@ NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 	return [self itemWithIdentifier:identifier title:title shortTitle:nil];
 }
 
-
-- (void) dealloc
-{
-	[_identifier release];
-	[_title release];
-	[_shortTitle release];
-	[super dealloc];
-}
-
-
 - (NSString*) titleForSummary
 {
 	if( [self shortTitle] )
 		return [self shortTitle];
 	return [self title];
 }
-
 
 @end
 
@@ -112,16 +101,6 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	}
 	return self;
 }
-
-
-- (void) dealloc
-{
-	[_options release];
-	[_valuesDict release];
-	[_stateDict release];
-	[super dealloc];
-}
-
 
 - (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier
 {
@@ -165,7 +144,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 {
 	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[group title] action:nil keyEquivalent:@""];
 	[menuItem setEnabled:NO];
-	return [menuItem autorelease];
+	return menuItem;
 }
 
 
@@ -183,7 +162,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	NSDictionary *bindingOptions = nil;
 	[menuItem bind:@"value" toObject:self withKeyPath:keypath options:bindingOptions];
 
-	return [menuItem autorelease];
+	return menuItem;
 }
 
 
@@ -327,7 +306,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 - (NSDictionary*) state
 {
-	return [[_stateDict copy] autorelease];
+	return [_stateDict copy];
 }
 
 

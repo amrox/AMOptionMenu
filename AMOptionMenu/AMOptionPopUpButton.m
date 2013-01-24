@@ -105,7 +105,7 @@
 									[self font], NSFontAttributeName,
 									nil];
 
-		NSAttributedString* tmpString = [[[NSAttributedString alloc] initWithString:title attributes:attributes] autorelease];
+		NSAttributedString* tmpString = [[NSAttributedString alloc] initWithString:title attributes:attributes];
 
 		//NSLog( @"title string size: %@", NSStringFromSize( [tmpString size] ) );
 		//NSLog( @"control text size: %@", NSStringFromSize( titleRect.size) );

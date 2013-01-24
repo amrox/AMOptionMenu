@@ -32,11 +32,11 @@
 
 @interface AMOptionPopUpButtonCell : NSPopUpButtonCell
 {
-	AMOptionMenuController* _optionMenuController;
+	__weak AMOptionMenuController* _optionMenuController;
 }
 
 
-@property (nonatomic, retain) AMOptionMenuController* optionMenuController;
+@property (nonatomic, weak) AMOptionMenuController *optionMenuController;
 
 
 @end
