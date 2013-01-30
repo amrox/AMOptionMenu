@@ -29,29 +29,31 @@
 #import "AMOptionMenuController.h"
 
 
+@interface AMOptionMenuItem ()
+@property (nonatomic, readwrite) BOOL bindValue;
+@end
+
 NSString* const kAMOptionPopUpButtonTitle = @"kAMOptionPopUpButtonTitle";
 
 
 @implementation AMOptionMenuItem
 
-@synthesize identifier = _identifier;
-@synthesize title = _title;
-@synthesize shortTitle = _shortTitle;
 
-
-+ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle bindValue:(BOOL)bindValue
 {
 	AMOptionMenuItem* item = [[AMOptionMenuItem alloc] init];
 	[item setIdentifier:identifier];
 	[item setTitle:title];
 	[item setShortTitle:shortTitle];
+    [item setBindValue:bindValue];
+    
 	return item;
 }
 
 
-+ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title bindValue:(BOOL)bindValue
 {
-	return [self itemWithIdentifier:identifier title:title shortTitle:nil];
+	return [self itemWithIdentifier:identifier title:title shortTitle:nil bindValue:bindValue];
 }
 
 - (NSString*) titleForSummary
@@ -70,6 +72,11 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 
 @interface AMOptionMenuController ()
+{
+    NSMutableArray* _options;
+	NSMutableDictionary* _valuesDict;
+	NSMutableDictionary* _stateDict;
+}
 
 @property (nonatomic, retain) NSArray* options;
 @property (nonatomic, retain) NSDictionary* valuesDict;
@@ -86,9 +93,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 @synthesize options = _options;
 @synthesize valuesDict = _valuesDict;
-@synthesize shouldSeparateOptions = _shouldSeparateSections;
-@synthesize allowUnkownOptions = _allowUnknownOptions;
-@synthesize maxValuesInSummary = _maxValuesInSummary;
+
 - (id) init
 {
 	self = [super init];
@@ -121,7 +126,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 		}
 
 		// -- don't add the separator for the last item. Might be more efficient way to do, but it's a small data set.
-		if( [self shouldSeparateOptions] && [[self options] lastObject] != option )
+		if( [self shouldSeparateSections] && [[self options] lastObject] != option )
 		{
 			[array addObject:[NSMenuItem separatorItem]];
 		}
@@ -160,7 +165,9 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	[menuItem setRepresentedObject:keypath];
 
 	NSDictionary *bindingOptions = nil;
-	[menuItem bind:@"value" toObject:self withKeyPath:keypath options:bindingOptions];
+    
+    if (option.bindValue)
+        [menuItem bind:@"value" toObject:self withKeyPath:keypath options:bindingOptions];
 
 	return menuItem;
 }
@@ -179,6 +186,10 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 {
 	NSLog( @"--------- choseOptionWithKeyPath: %@ ---------", keypath );
 	[self setValue:[NSNumber numberWithBool:YES] forKeyPath:keypath];
+    
+    NSArray *keypathComponents = [keypath componentsSeparatedByString:@"."];
+    assert(keypathComponents.count == 2);
+    [_delegate didChooseOption:keypathComponents[0] forSection:keypathComponents[1]];
 }
 
 
@@ -239,7 +250,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 - (void)setValue:(id)value forKeyPath:(NSString*)keyPath
 {
-	NSLog( @"settin value:%@ forKeyPath:%@", value, keyPath );
+	NSLog( @"setting value:%@ forKeyPath:%@", value, keyPath );
 	NSArray* keyPathComponents = [keyPath componentsSeparatedByString:@"."];
 	if( [keyPathComponents count] == 2 )
 	{
@@ -323,7 +334,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 - (void) insertOptionWithIdentifier:(NSString*)identifier title:(NSString*)title atIndex:(NSInteger)index
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentWillChange object:self];
-	AMOptionMenuItem* option = [AMOptionMenuItem itemWithIdentifier:identifier title:title];
+	AMOptionMenuItem* option = [AMOptionMenuItem itemWithIdentifier:identifier title:title bindValue:YES];
 	[_options insertObject:option atIndex:index];
 	[[NSNotificationCenter defaultCenter] postNotificationName:kAMOptionMenuContentDidChange object:self];
 
@@ -359,7 +370,8 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 			AMOptionMenuItem* valueItem = [AMOptionMenuItem itemWithIdentifier:valueIdentifer
 																		 title:valueTitle
-																	shortTitle:valueShortTitle];
+																	shortTitle:valueShortTitle
+                                                                     bindValue:YES];
 			[valueItems addObject:valueItem];
 		}
 		[self setAlternatives:valueItems forOptionWithIdentifier:optionIdentifier];

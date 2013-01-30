@@ -28,23 +28,22 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol AMOptionMenuControllerDelegate <NSObject>
+- (void)didChooseOption:(NSString *)value forSection:(NSString *)section;
+@end
 
 extern NSString* const kAMOptionPopUpButtonTitle;
 
-@interface AMOptionMenuItem : NSObject
-{
-	NSString* _identifier;
-	NSString* _title;
-	NSString* _shortTitle;
-}
+@interface AMOptionMenuItem : NSObject {}
 
 @property (nonatomic, retain) NSString* identifier;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* shortTitle;
 @property (nonatomic, readonly) NSString* titleForSummary;
+@property (nonatomic, readonly) BOOL bindValue;
 
-+ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title;
-+ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle;
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title bindValue:(BOOL)bindValue;
++ (AMOptionMenuItem*) itemWithIdentifier:(NSString*)identifier title:(NSString*)title shortTitle:(NSString*)shortTitle bindValue:(BOOL)bindValue;
 @end
 
 
@@ -52,22 +51,13 @@ extern NSString* const kAMOptionMenuContentWillChange;
 extern NSString* const kAMOptionMenuContentDidChange;
 
 
-@interface AMOptionMenuController : NSObject
-{
-	NSMutableArray* _options;
-	NSMutableDictionary* _valuesDict;
-	NSMutableDictionary* _stateDict;
-
-	BOOL _allowUnknownOptions;
-	BOOL _shouldSeparateSections;
-	NSUInteger _maxValuesInSummary;
-}
+@interface AMOptionMenuController : NSObject {}
 
 @property (nonatomic, readonly) NSString* summaryString;
-@property (nonatomic, assign) BOOL shouldSeparateOptions;
+@property (nonatomic, assign) BOOL shouldSeparateSections;
 @property (nonatomic, assign) BOOL allowUnkownOptions;
 @property (nonatomic, assign) NSUInteger maxValuesInSummary; // defaults to NSUIntegerMax;
-
+@property (nonatomic, assign) id<AMOptionMenuControllerDelegate> delegate;
 
 - (void) insertOptionWithIdentifier:(NSString*)identifier title:(NSString*)title atIndex:(NSInteger)index;
 - (void) setAlternatives:(NSArray*)alternatives forOptionWithIdentifier:(NSString*)optionIdentifier;
