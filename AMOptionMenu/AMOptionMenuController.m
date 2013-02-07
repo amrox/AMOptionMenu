@@ -103,7 +103,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 		_valuesDict = [[NSMutableDictionary alloc] init];
 		_stateDict = [[NSMutableDictionary alloc] init];
 		_maxValuesInSummary = NSUIntegerMax;
-	}
+    }
 	return self;
 }
 
@@ -161,7 +161,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	[menuItem setTarget:self];
 	[menuItem setEnabled:YES];
 
-	NSString* keypath = [NSString stringWithFormat:@"%@.is%@", [group identifier], [option identifier]];
+	NSString* keypath = [NSString stringWithFormat:@"%@.%@", [group identifier], [option identifier]];
 	[menuItem setRepresentedObject:keypath];
 
 	NSDictionary *bindingOptions = nil;
@@ -189,7 +189,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
     
     NSArray *keypathComponents = [keypath componentsSeparatedByString:@"."];
     assert(keypathComponents.count == 2);
-    [_delegate didChooseOption:keypathComponents[0] forSection:keypathComponents[1]];
+    [_delegate didChooseOption:keypathComponents[1] forSection:keypathComponents[0]];
 }
 
 
@@ -231,8 +231,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 
 		if( [_valuesDict objectForKey:groupKey] )
 		{
-			NSString* valueWithIsPrefix = [NSString stringWithFormat:@"is%@", [_stateDict objectForKey:groupKey]];
-			if( [valueWithIsPrefix isEqual:optionKey] )
+			if( [[_stateDict objectForKey:groupKey] isEqual:optionKey] )
 			{
 				NSLog( @"valueForKeyPath:%@ is YES", keyPath );
 				return [NSNumber numberWithBool:YES];
@@ -257,19 +256,16 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 		NSString* sectionKey = [keyPathComponents objectAtIndex:0];
 		NSString* optionKey = [keyPathComponents objectAtIndex:1];
 
-		if( [optionKey hasPrefix:@"is"] )
-		{
-			NSString* option = [optionKey substringFromIndex:2];
+        NSString* option = optionKey;
 
-			if( [_valuesDict objectForKey:sectionKey] )
-			{
-				if( [value boolValue] )
-				{
-					[self setValue:option forKey:sectionKey];
-				}
-				return;
-			}
-		}
+        if( [_valuesDict objectForKey:sectionKey] )
+        {
+            if( [value boolValue] )
+            {
+                [self setValue:option forKey:sectionKey];
+            }
+            return;
+        }
 	}
 	[super setValue:value forKeyPath:keyPath];
 }
