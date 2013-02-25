@@ -59,6 +59,9 @@ extern NSString* const kAMOptionMenuContentDidChange;
 @property (nonatomic, assign) NSUInteger maxValuesInSummary; // defaults to NSUIntegerMax;
 @property (nonatomic, assign) id<AMOptionMenuControllerDelegate> delegate;
 
+@property (nonatomic, retain) NSDictionary* valuesDict;
+@property (nonatomic, retain) NSArray* options;
+
 - (void) insertOptionWithIdentifier:(NSString*)identifier title:(NSString*)title atIndex:(NSInteger)index;
 - (void) setAlternatives:(NSArray*)alternatives forOptionWithIdentifier:(NSString*)optionIdentifier;
 - (void) insertOption:(AMOptionMenuItem*)option atIndex:(NSInteger)insertIndex withAternatives:(NSArray*)alternatives;

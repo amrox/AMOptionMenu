@@ -78,9 +78,6 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	NSMutableDictionary* _stateDict;
 }
 
-@property (nonatomic, retain) NSArray* options;
-@property (nonatomic, retain) NSDictionary* valuesDict;
-
 - (NSArray*) createMenuItems;
 - (NSArray*) optionValuesForGroupWithIdentifier:(NSString*)identifier;
 - (NSMenuItem*) menuItemForGroup:(AMOptionMenuItem*)group;
