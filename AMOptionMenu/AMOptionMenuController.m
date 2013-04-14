@@ -195,7 +195,7 @@ NSString* const kAMOptionMenuContentDidChange = @"kAMOptionMenuDataDidChange";
 	if( [_valuesDict objectForKey:key] )
 	{
 		id val = [_stateDict objectForKey:key];
-		NSLog( @"valueForUndefinedKey: %@ = %@", key, val );
+		//NSLog( @"valueForUndefinedKey: %@ = %@", key, val );
 		return val;
 	}
 
