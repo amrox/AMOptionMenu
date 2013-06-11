@@ -35,7 +35,7 @@
 	BOOL _smartTitleTruncation;
 }
 
-@property (nonatomic, retain) AMOptionMenuController* optionMenuController;
+@property (nonatomic, weak) AMOptionMenuController* optionMenuController;
 
 @property (nonatomic, assign) BOOL smartTitleTruncation;
 
