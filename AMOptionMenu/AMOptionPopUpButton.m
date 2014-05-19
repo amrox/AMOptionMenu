@@ -129,5 +129,9 @@
 	[super setTitle:title];
 }
 
+-(void)dealloc
+{
+  [self unbind:@"title"];
+}
 
 @end
