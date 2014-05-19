@@ -101,10 +101,12 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kAMOptionMenuContentDidChange object:_optionMenuController];
 
 	_optionMenuController = controller;
-
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuContentDidChange object:_optionMenuController];
-
+	
 	[self updateMenu];
+
+	if (controller ==nil) return;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(optionsChanged:) name:kAMOptionMenuContentDidChange object:_optionMenuController];
 }
 
 
